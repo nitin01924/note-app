@@ -1,0 +1,6 @@
+# NODE-MODULES 
+Backend/node_modules/
+
+
+# for .env file
+Backend/.env
