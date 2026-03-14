@@ -1,5 +1,5 @@
 import Note from "../models/Notes";
-import asyncHandler from "../middlewares/asyncHandlers";
+import asyncHandler from "../middlewares/asyncHandler";
 
 //CREATE-NOTE
 export const createNote = asyncHandler(async (req, res) => {
