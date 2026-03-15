@@ -28,3 +28,25 @@ export const registerUser = asyncHandler(async (req, res) => {
     token: generateToken(user._id),
   });
 });
+
+export const loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({
+      message: "email and password are required.",
+    });
+  }
+
+  const normalizedEmail = email.toLowerCase();
+  const user = await User.findOne({ email: normalizedEmail }).select(
+    "+password",
+  );
+
+  res.status(201).json({
+    name: user.name,
+    id: user._id,
+    email: user.email,
+    token: generateToken(user._id),
+  });
+});
