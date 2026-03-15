@@ -1,6 +1,6 @@
-import asyncHandler from "../middlewares/asyncHandler";
-import User from "../models/User";
-import generateToken from "../utils/generateToken";
+import asyncHandler from "../middlewares/asyncHandler.js";
+import User from "../models/User.js";
+import generateToken from "../utils/generateToken.js";
 
 export const registerUser = asyncHandler(async (req, res) => {
   const { name, password } = req.body;
