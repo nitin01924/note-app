@@ -63,8 +63,11 @@ export const updateNote = asyncHandler(async (req, res) => {
     });
   }
 
+  const { title, content } = req.body || {};
   note.title = req.body.title || note.title;
-  note.content = req.body.content || note.content;
+  // note.content = req.body.content || note.content;
+
+  note.content = note.content + " " + req.body.content;
   await note.save();
 
   res.status(200).json({
