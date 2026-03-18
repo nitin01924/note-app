@@ -25,3 +25,26 @@ export const getNote = asyncHandler(async (req, res) => {
     data: notes,
   });
 });
+
+export const deleteNote = asyncHandler(async (req, res) => {
+  const note = await Note.findById(req.params.id);
+
+  if (!note) {
+    return res.status(404).json({
+      message: "Note not found",
+    });
+  }
+
+  if (note.user.toString() !== req.user._id.toString()) {
+    return res.status(401).json({
+      message: "Not authorized to delete this note",
+    });
+  }
+
+  await note.deleteOne();
+
+  // 4️⃣ Response
+  res.status(200).json({
+    message: "Note deleted successfully",
+  });
+});
