@@ -1,6 +1,7 @@
 import Note from "../models/Note.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
 
+//
 //CREATE-NOTE
 export const createNote = asyncHandler(async (req, res) => {
   const { title, content, pinned } = req.body;
@@ -16,6 +17,8 @@ export const createNote = asyncHandler(async (req, res) => {
   });
 });
 
+//
+// GET NOTE
 export const getNote = asyncHandler(async (req, res) => {
   const notes = await Note.find({
     user: req.user._id,
@@ -26,6 +29,8 @@ export const getNote = asyncHandler(async (req, res) => {
   });
 });
 
+//
+// DELETE NOTE
 export const deleteNote = asyncHandler(async (req, res) => {
   const note = await Note.findById(req.params.id);
 
@@ -48,27 +53,30 @@ export const deleteNote = asyncHandler(async (req, res) => {
   });
 });
 
+//
+//UPDATE NOTE
 export const updateNote = asyncHandler(async (req, res) => {
   const note = await Note.findById(req.params.id);
 
+  // ERROR HANDLING FOR (!NOTE)
   if (!note) {
     return res.status(404).json({
       message: "Note not found!",
     });
   }
 
+  // CHECK AUTHORIZATION
   if (note.user.toString() !== req.user._id.toString()) {
     return res.status(401).json({
       message: "Not authorized to update this note",
     });
   }
 
-  const { title, content } = req.body || {};
+  // UPDATING CONTENT
+  const { title, content } = req.body || {}; // adding logic to prevent errors
   note.title = req.body.title || note.title;
-  // note.content = req.body.content || note.content;
-
-  note.content = note.content + " " + req.body.content;
-  await note.save();
+  note.content = req.body.content || note.content;
+  await note.save(); // saving the note
 
   res.status(200).json({
     message: "Note updated successfully",
