@@ -1,6 +1,10 @@
+import Register from "./pages/Register.jsx";
+
 function App() {
   return (
-    <h1>Notes App</h1>
+    <div>
+      <Register />
+    </div>
   );
 }
 
