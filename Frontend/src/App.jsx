@@ -1,10 +1,9 @@
-import Register from "./pages/Register.jsx";
-import Login from "./pages/Login.jsx";
+import Notes from "./pages/Notes.jsx";
 
 function App() {
   return (
     <div>
-      <Login />
+      <Notes />
     </div>
   );
 }

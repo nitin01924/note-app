@@ -14,6 +14,9 @@ function Login() {
     }
     const data = { email, password };
     const res = await loginUser(data);
+
+    localStorage.setItem("token", res.token);
+
     console.log(res);
   };
 
