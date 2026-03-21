@@ -1,9 +1,9 @@
-import CreateNote from "./pages/CreateNote.jsx";
+import Notes from "./pages/Notes";
 
 function App() {
   return (
     <div>
-      <CreateNote />
+      <Notes />
     </div>
   );
 }

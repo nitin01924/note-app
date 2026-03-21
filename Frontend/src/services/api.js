@@ -57,3 +57,18 @@ export const createNotes = async (data) => {
   const result = await response.json();
   return result;
 };
+
+// DELETE NOTE
+export const deleteNote = async (id) => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`http://localhost:3000/api/notes/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+  return data;
+};
