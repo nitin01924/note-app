@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getNotes } from "../services/api";
+import { getNotes } from "../services/api.js";
 
 function Notes() {
   const [notes, setNotes] = useState([]);
@@ -7,7 +7,6 @@ function Notes() {
   useEffect(() => {
     const fetchNotes = async () => {
       const data = await getNotes();
-      console.log(data);
       setNotes(data.data);
     };
     fetchNotes();
@@ -30,5 +29,3 @@ function Notes() {
     </div>
   );
 }
-
-export default Notes;

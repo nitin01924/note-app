@@ -26,7 +26,7 @@ export const loginUser = async (data) => {
   return result;
 };
 
-// GET NOTES
+// FETCH NOTES (GET)
 export const getNotes = async () => {
   const token = localStorage.getItem("token");
 
@@ -39,4 +39,21 @@ export const getNotes = async () => {
   });
   const data = await response.json();
   return data;
+};
+
+// CREATE NOTES (PUSH)
+export const createNotes = async (data) => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch("http://localhost:3000/api/notes", {
+    method: "POST", 
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data), 
+  });
+
+  const result = await response.json();
+  return result;
 };
