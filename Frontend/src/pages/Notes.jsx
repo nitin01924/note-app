@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
-import { getNotes, createNotes, deleteNote } from "../services/api";
+import { getNotes, createNotes, deleteNote, updateNote } from "../services/api";
 
 function Notes() {
   const [notes, setNotes] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  // Fetch notes on load
+  //   Edit state
+  const [editId, setEditId] = useState(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editContent, setEditContent] = useState("");
+
+  //   Fetch notes
   useEffect(() => {
     const fetchNotes = async () => {
       const data = await getNotes();
@@ -16,7 +21,7 @@ function Notes() {
     fetchNotes();
   }, []);
 
-  //  Create note
+  //   Create note
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,18 +38,38 @@ function Notes() {
     setContent("");
   };
 
-  //  Delete note
+  //   Delete note
   const handleDelete = async (id) => {
     await deleteNote(id);
-
     setNotes((prev) => prev.filter((note) => note._id !== id));
+  };
+
+  //   Start editing
+  const handleEdit = (note) => {
+    setEditId(note._id);
+    setEditTitle(note.title);
+    setEditContent(note.content);
+  };
+
+  //   Update note
+  const handleUpdate = async (id) => {
+    const updated = await updateNote(id, {
+      title: editTitle,
+      content: editContent,
+    });
+
+    setNotes((prev) =>
+      prev.map((note) => (note._id === id ? updated.data : note)),
+    );
+
+    setEditId(null);
   };
 
   return (
     <div>
       <h2>Your Notes</h2>
 
-      {/*  Create Note Form */}
+      {/*   Create Note */}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -68,16 +93,40 @@ function Notes() {
 
       <hr />
 
-      {/*  Notes List */}
+      {/*   Notes List */}
       {notes.length === 0 ? (
         <p>No notes found</p>
       ) : (
         notes.map((note) => (
           <div key={note._id}>
-            <h4>{note.title}</h4>
-            <p>{note.content}</p>
+            {editId === note._id ? (
+              <>
+                <input
+                  value={editTitle}
+                  onChange={(e) => setEditTitle(e.target.value)}
+                />
+                <br />
+                <br />
 
-            <button onClick={() => handleDelete(note._id)}>Delete</button>
+                <textarea
+                  value={editContent}
+                  onChange={(e) => setEditContent(e.target.value)}
+                ></textarea>
+                <br />
+                <br />
+
+                <button onClick={() => handleUpdate(note._id)}>Save</button>
+              </>
+            ) : (
+              <>
+                <h4>{note.title}</h4>
+                <p>{note.content}</p>
+
+                <button onClick={() => handleEdit(note)}>Edit</button>
+
+                <button onClick={() => handleDelete(note._id)}>Delete</button>
+              </>
+            )}
 
             <hr />
           </div>
