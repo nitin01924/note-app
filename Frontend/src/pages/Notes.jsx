@@ -67,6 +67,14 @@ function Notes() {
 
   return (
     <div>
+      <button
+        onClick={() => {
+          localStorage.removeItem("token");
+          window.location.reload();
+        }}
+      >
+        Logout
+      </button>
       <h2>Your Notes</h2>
 
       {/*   Create Note */}
