@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { registerUser } from "../services/api";
 
+
+
 function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -9,12 +11,18 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const navigate = useNavigate();
+
     if (!name || !email || !password) {
       alert("Please fill all fields");
       return;
     }
     const data = { name, email, password };
     const res = await registerUser(data);
+
+    // storing the token in localstorage when user register (signup)
+    localStorage.setItem("token", res.token);
+    navigate("/notes");
 
     console.log(res);
   };
@@ -56,6 +64,7 @@ function Register() {
 
         <button type="submit">Register</button>
       </form>
+      <p onClick={() => navigate("/")}>Already have an account? Login</p>
     </div>
   );
 }

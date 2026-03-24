@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { loginUser } from "../services/api";
+import { useNavigate } from "react-router-dom";
+
+    const navigate = useNavigate();
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -7,6 +10,7 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
 
     if (!email || !password) {
       alert("Please fill all fields");
@@ -16,6 +20,8 @@ function Login() {
     const res = await loginUser(data);
 
     localStorage.setItem("token", res.token);
+    window.location.reload();
+    navigate("/notes");
 
     console.log(res);
   };
@@ -45,6 +51,9 @@ function Login() {
 
         <button type="submit">Login</button>
       </form>
+      <p onClick={() => navigate("/register")}>
+        Don't have an account? Register
+      </p>
     </div>
   );
 }

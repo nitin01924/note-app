@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { getNotes, createNotes, deleteNote, updateNote } from "../services/api";
+import { useNavigate } from "react-router-dom";
+
+const navigate = useNavigate();
 
 function Notes() {
   const [notes, setNotes] = useState([]);
@@ -70,7 +73,7 @@ function Notes() {
       <button
         onClick={() => {
           localStorage.removeItem("token");
-          window.location.reload();
+          navigate("/");
         }}
       >
         Logout
