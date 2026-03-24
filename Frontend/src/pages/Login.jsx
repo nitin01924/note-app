@@ -2,15 +2,14 @@ import { useState } from "react";
 import { loginUser } from "../services/api";
 import { useNavigate } from "react-router-dom";
 
-    const navigate = useNavigate();
-
 function Login() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
 
     if (!email || !password) {
       alert("Please fill all fields");

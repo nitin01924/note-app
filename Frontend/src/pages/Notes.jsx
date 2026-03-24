@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { getNotes, createNotes, deleteNote, updateNote } from "../services/api";
 import { useNavigate } from "react-router-dom";
 
-const navigate = useNavigate();
-
 function Notes() {
+  const navigate = useNavigate();
+
   const [notes, setNotes] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");

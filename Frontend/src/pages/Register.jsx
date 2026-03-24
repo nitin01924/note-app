@@ -1,17 +1,15 @@
 import { useState } from "react";
 import { registerUser } from "../services/api";
 
-
-
 function Register() {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const navigate = useNavigate();
 
     if (!name || !email || !password) {
       alert("Please fill all fields");
