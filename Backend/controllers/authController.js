@@ -43,6 +43,12 @@ export const loginUser = asyncHandler(async (req, res) => {
     "+password",
   );
 
+  if (!user) {
+    return res.status(401).json({
+      message: "user does not exist, register it",
+    });
+  }
+
   res.status(201).json({
     name: user.name,
     id: user._id,
