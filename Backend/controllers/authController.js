@@ -56,3 +56,10 @@ export const loginUser = asyncHandler(async (req, res) => {
     token: generateToken(user._id),
   });
 });
+
+// ABOUT USER
+export const getMe = (req, res) => {
+  res.json({
+    user: req.user,
+  });
+};
