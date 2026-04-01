@@ -4,9 +4,7 @@ import { apiRequest } from "../utils/api";
 export const registerUser = async (data) => {
   const response = await apiRequest("/auth/register", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+
     body: JSON.stringify(data),
   });
 
@@ -17,9 +15,7 @@ export const registerUser = async (data) => {
 export const loginUser = async (data) => {
   const response = await apiRequest("/auth/login", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+
     body: JSON.stringify(data),
   });
 
@@ -31,10 +27,7 @@ export const createNotes = async (data) => {
   const token = localStorage.getItem("token");
   const response = await apiRequest("/notes", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+
     body: JSON.stringify(data),
   });
 
@@ -47,10 +40,6 @@ export const getNotes = async () => {
 
   const response = await apiRequest("/notes", {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
   });
   return response;
 };
@@ -61,9 +50,6 @@ export const deleteNote = async (id) => {
 
   const response = await apiRequest(`/notes/${id}`, {
     method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
   });
 
   return response;
@@ -75,10 +61,7 @@ export const updateNote = async (id, data) => {
 
   const response = await apiRequest(`/notes/${id}`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+
     body: JSON.stringify(data),
   });
 
