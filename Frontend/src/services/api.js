@@ -2,68 +2,60 @@ import { apiRequest } from "../utils/api";
 
 //CONNECT REGISTERUSER
 export const registerUser = async (data) => {
-  const response = await apiRequest("/auth/register", {
+  const data = await apiRequest("/auth/register", {
     method: "POST",
-
     body: JSON.stringify(data),
   });
 
-  return response;
+  return data;
 };
 
 // LOGIN USER
 export const loginUser = async (data) => {
-  const response = await apiRequest("/auth/login", {
+  const data = await apiRequest("/auth/login", {
     method: "POST",
-
     body: JSON.stringify(data),
   });
 
-  return response;
+  return data;
 };
 
 // CREATE NOTES (PUSH)
 export const createNotes = async (data) => {
   const token = localStorage.getItem("token");
-  const response = await apiRequest("/notes", {
+  const data = await apiRequest("/notes", {
     method: "POST",
-
     body: JSON.stringify(data),
   });
 
-  return response;
+  return data;
 };
 
 // FETCH NOTES (GET)
 export const getNotes = async () => {
   const token = localStorage.getItem("token");
-
-  const response = await apiRequest("/notes", {
+  const data = await apiRequest("/notes", {
     method: "GET",
   });
-  return response;
+  return data;
 };
 
 // DELETE NOTE
 export const deleteNote = async (id) => {
   const token = localStorage.getItem("token");
-
-  const response = await apiRequest(`/notes/${id}`, {
+  const data = await apiRequest(`/notes/${id}`, {
     method: "DELETE",
   });
 
-  return response;
+  return data;
 };
 
 // UPDATE NOTE
-export const updateNote = async (id, data) => {
-  const token = localStorage.getItem("token");
-
-  const response = await apiRequest(`/notes/${id}`, {
+export const updateNote = async (id, notedata) => {
+  const data = await apiRequest(`/notes/${id}`, {
     method: "PUT",
-
-    body: JSON.stringify(data),
+    body: JSON.stringify(notedata),
   });
 
-  return response;
+  return data;
 };
