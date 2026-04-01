@@ -12,11 +12,20 @@ export const apiRequest = async (endpoint, options = {}) => {
     },
   });
 
+  const data = await res.json();
+
+  // ERROR HANDLING
+  //  Handle unauthorized
   if (res.status === 401) {
     localStorage.removeItem("token");
     window.location.href = "/";
     return;
   }
 
-  return res.json();
+  //  Handle other errors
+  if (!res.ok) {
+    throw new Error(data.message || "Something went wrong");
+  }
+
+  return data;
 };
