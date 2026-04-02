@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Notes from "./pages/Notes.jsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //  FUNCTION - APP
 function App() {
@@ -38,11 +40,14 @@ function App() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <Routes>
-      <Route path="/" element={user ? <Navigate to="/notes" /> : <Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/notes" element={user ? <Notes /> : <Navigate to="/" />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={user ? <Navigate to="/notes" /> : <Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/notes" element={user ? <Notes /> : <Navigate to="/" />} />
+      </Routes>
+      <ToastContainer position="top-right" autoClose={2000} />
+    </>
   );
 }
 

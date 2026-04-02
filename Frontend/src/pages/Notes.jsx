@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
-import { getNotes, createNotes, deleteNote, updateNote } from "../services/api";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
+import { getNotes, createNotes, deleteNote, updateNote } from "../services/api";
 
 function Notes() {
   const navigate = useNavigate();
@@ -9,78 +11,91 @@ function Notes() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  //   Edit state
+  // Edit state
   const [editId, setEditId] = useState(null);
   const [editTitle, setEditTitle] = useState("");
   const [editContent, setEditContent] = useState("");
 
-  //   Fetch notes
+  // Fetch notes
   useEffect(() => {
     const fetchNotes = async () => {
-      const data = await getNotes();
-      setNotes(data.data);
+      try {
+        const data = await getNotes();
+        setNotes(data.data); // adjust if needed
+      } catch (error) {
+        toast.error(error.message);
+      }
     };
 
     fetchNotes();
   }, []);
 
-  //   Create note
+  // Create note
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!title || !content) {
-      alert("Please fill all fields");
+      toast.error("Please fill all fields");
       return;
     }
 
-    const newNote = await createNotes({ title, content });
+    try {
+      const newNote = await createNotes({ title, content });
 
-    setNotes((prev) => [...prev, newNote.data]);
+      setNotes((prev) => [...prev, newNote.data]);
+      setTitle("");
+      setContent("");
 
-    setTitle("");
-    setContent("");
+      toast.success("Note added successfully");
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
-  //   Delete note
+  // Delete note
   const handleDelete = async (id) => {
-    await deleteNote(id);
-    setNotes((prev) => prev.filter((note) => note._id !== id));
+    try {
+      await deleteNote(id);
+
+      setNotes((prev) => prev.filter((note) => note._id !== id));
+      toast.success("Note deleted");
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
-  //   Start editing
+  // Start editing
   const handleEdit = (note) => {
     setEditId(note._id);
     setEditTitle(note.title);
     setEditContent(note.content);
   };
 
-  //   Update note
+  // Update note
   const handleUpdate = async (id) => {
-    const updated = await updateNote(id, {
-      title: editTitle,
-      content: editContent,
-    });
+    try {
+      const updated = await updateNote(id, {
+        title: editTitle,
+        content: editContent,
+      });
 
-    setNotes((prev) =>
-      prev.map((note) => (note._id === id ? updated.data : note)),
-    );
+      setNotes((prev) =>
+        prev.map((note) => (note._id === id ? updated.data : note)),
+      );
 
-    setEditId(null);
+      setEditId(null);
+      toast.success("Note updated");
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
+  // ================= JSX (React UI) =================
   return (
     <div>
-      <button
-        onClick={() => {
-          localStorage.removeItem("token");
-          navigate("/");
-        }}
-      >
-        Logout
-      </button>
-      <h2>Your Notes</h2>
+      <h2>My Notes</h2>
 
-      {/*   Create Note */}
+      {/* Create Note */}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -90,21 +105,17 @@ function Notes() {
         />
         <br />
         <br />
-
         <textarea
           placeholder="Content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
-        ></textarea>
+        />
         <br />
         <br />
-
         <button type="submit">Add Note</button>
       </form>
 
-      <hr />
-
-      {/*   Notes List */}
+      {/* Notes List */}
       {notes.length === 0 ? (
         <p>No notes found</p>
       ) : (
@@ -116,21 +127,17 @@ function Notes() {
                   value={editTitle}
                   onChange={(e) => setEditTitle(e.target.value)}
                 />
-                <br />
-                <br />
 
                 <textarea
                   value={editContent}
                   onChange={(e) => setEditContent(e.target.value)}
-                ></textarea>
-                <br />
-                <br />
+                />
 
                 <button onClick={() => handleUpdate(note._id)}>Save</button>
               </>
             ) : (
               <>
-                <h4>{note.title}</h4>
+                <h3>{note.title}</h3>
                 <p>{note.content}</p>
 
                 <button onClick={() => handleEdit(note)}>Edit</button>
@@ -138,8 +145,6 @@ function Notes() {
                 <button onClick={() => handleDelete(note._id)}>Delete</button>
               </>
             )}
-
-            <hr />
           </div>
         ))
       )}
