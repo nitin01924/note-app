@@ -4,7 +4,6 @@ import { apiRequest } from "../utils/api";
 export const registerUser = async (data) => {
   const response = await apiRequest("/auth/register", {
     method: "POST",
-
     body: JSON.stringify(data),
   });
 
@@ -15,7 +14,6 @@ export const registerUser = async (data) => {
 export const loginUser = async (data) => {
   const response = await apiRequest("/auth/login", {
     method: "POST",
-
     body: JSON.stringify(data),
   });
 
@@ -24,10 +22,8 @@ export const loginUser = async (data) => {
 
 // CREATE NOTES (PUSH)
 export const createNotes = async (data) => {
-  const token = localStorage.getItem("token");
   const response = await apiRequest("/notes", {
     method: "POST",
-
     body: JSON.stringify(data),
   });
 
@@ -36,8 +32,6 @@ export const createNotes = async (data) => {
 
 // FETCH NOTES (GET)
 export const getNotes = async () => {
-  const token = localStorage.getItem("token");
-
   const response = await apiRequest("/notes", {
     method: "GET",
   });
@@ -46,8 +40,6 @@ export const getNotes = async () => {
 
 // DELETE NOTE
 export const deleteNote = async (id) => {
-  const token = localStorage.getItem("token");
-
   const response = await apiRequest(`/notes/${id}`, {
     method: "DELETE",
   });
@@ -57,8 +49,6 @@ export const deleteNote = async (id) => {
 
 // UPDATE NOTE
 export const updateNote = async (id, data) => {
-  const token = localStorage.getItem("token");
-
   const response = await apiRequest(`/notes/${id}`, {
     method: "PUT",
 
