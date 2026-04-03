@@ -21,7 +21,7 @@ function Notes() {
     const fetchNotes = async () => {
       try {
         const data = await getNotes();
-        setNotes(data.data); // adjust if needed
+        setNotes(data.data);
       } catch (error) {
         toast.error(error.message);
       }
@@ -41,11 +41,10 @@ function Notes() {
 
     try {
       const newNote = await createNotes({ title, content });
-
       setNotes((prev) => [...prev, newNote.data]);
       setTitle("");
       setContent("");
-
+      
       toast.success("Note added successfully");
     } catch (error) {
       toast.error(error.message);
@@ -114,7 +113,7 @@ function Notes() {
         <br />
         <button type="submit">Add Note</button>
       </form>
-
+      <hr />
       {/* Notes List */}
       {notes.length === 0 ? (
         <p>No notes found</p>
