@@ -90,65 +90,64 @@ function Notes() {
   };
 
   // ================= JSX (React UI) =================
-  return (
-    <div>
-      <h2 className="text-red-500">My Notes</h2>
+ return (
+  <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10">
 
-      {/* Create Note */}
+    <h1 className="text-3xl font-bold mb-6">My Notes</h1>
+
+    <div className="w-full max-w-md bg-white p-6 rounded-xl shadow">
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          className="w-full mb-3 p-2 border rounded"
         />
-        <br />
-        <br />
+
         <textarea
           placeholder="Content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
+          className="w-full mb-3 p-2 border rounded"
         />
-        <br />
-        <br />
-        <button type="submit">Add Note</button>
+
+        <button className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
+          Add Note
+        </button>
       </form>
-      <hr />
-      {/* Notes List */}
+    </div>
+
+    <div className="w-full max-w-md mt-6 space-y-4">
       {notes.length === 0 ? (
-        <p>No notes found</p>
+        <p className="text-center text-gray-500">No notes found</p>
       ) : (
         notes.map((note) => (
-          <div key={note._id}>
-            {editId === note._id ? (
-              <>
-                <input
-                  value={editTitle}
-                  onChange={(e) => setEditTitle(e.target.value)}
-                />
+          <div key={note._id} className="bg-white p-4 rounded-xl shadow">
+            <h3 className="font-semibold">{note.title}</h3>
+            <p className="text-gray-600">{note.content}</p>
 
-                <textarea
-                  value={editContent}
-                  onChange={(e) => setEditContent(e.target.value)}
-                />
+            <div className="flex gap-2 mt-3">
+              <button
+                onClick={() => handleEdit(note)}
+                className="bg-yellow-400 px-3 py-1 rounded"
+              >
+                Edit
+              </button>
 
-                <button onClick={() => handleUpdate(note._id)}>Save</button>
-              </>
-            ) : (
-              <>
-                <h3>{note.title}</h3>
-                <p>{note.content}</p>
-
-                <button onClick={() => handleEdit(note)}>Edit</button>
-
-                <button onClick={() => handleDelete(note._id)}>Delete</button>
-              </>
-            )}
+              <button
+                onClick={() => handleDelete(note._id)}
+                className="bg-red-500 text-white px-3 py-1 rounded"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         ))
       )}
     </div>
-  );
-}
 
+  </div>
+); 
+}
 export default Notes;
