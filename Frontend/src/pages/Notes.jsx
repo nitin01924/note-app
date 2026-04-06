@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import "../index.css"
 import { getNotes, createNotes, deleteNote, updateNote } from "../services/api";
 
 function Notes() {
@@ -92,7 +92,7 @@ function Notes() {
   // ================= JSX (React UI) =================
   return (
     <div>
-      <h2>My Notes</h2>
+      <h2 className="text-red-500">My Notes</h2>
 
       {/* Create Note */}
       <form onSubmit={handleSubmit}>
