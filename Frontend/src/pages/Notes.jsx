@@ -10,6 +10,7 @@ function Notes() {
   const [notes, setNotes] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // Edit state
   const [editId, setEditId] = useState(null);
@@ -39,7 +40,11 @@ function Notes() {
       return;
     }
 
+    if (loading) return;
+
     try {
+      setLoading(true);
+
       const newNote = await createNotes({ title, content });
       setNotes((prev) => [...prev, newNote.data]);
       setTitle("");
@@ -48,6 +53,8 @@ function Notes() {
       toast.success("Note added successfully");
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -111,8 +118,13 @@ function Notes() {
             className="w-full mb-3 p-2 border rounded"
           />
 
-          <button className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
-            Add Note
+          <button
+            disabled={loading}
+            className={`w-full py-2 rounded ${
+              loading ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+            } text-white`}
+          >
+            {loading ? "Adding..." : "Add Note"}
           </button>
         </form>
       </div>
