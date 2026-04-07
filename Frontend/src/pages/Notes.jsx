@@ -79,7 +79,7 @@ function Notes() {
       });
 
       setNotes((prev) =>
-        prev.map((note) => (note._id === id ? updated.data : note)),
+        prev.map((note) => (note._id === id ? updated : note)),
       );
 
       setEditId(null);
@@ -89,7 +89,7 @@ function Notes() {
     }
   };
 
-  // ================= JSX (React UI) =================
+  // ======= JSX (React UI) ======= //
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10">
       <h1 className="text-3xl font-bold mb-6">My Notes</h1>

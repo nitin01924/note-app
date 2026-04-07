@@ -74,11 +74,9 @@ export const updateNote = asyncHandler(async (req, res) => {
 
   // UPDATING CONTENT
   const { title, content } = req.body || {}; // adding logic to prevent errors
-  note.title = req.body.title || note.title;
-  note.content = req.body.content || note.content;
+  note.title = title ?? note.title;
+  note.content = content ?? note.content;
   await note.save(); // saving the note
 
-  res.status(200).json({
-    message: "Note updated successfully",
-  });
+  res.status(200).json(note);
 });
