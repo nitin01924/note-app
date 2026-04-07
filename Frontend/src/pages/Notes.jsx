@@ -108,14 +108,14 @@ function Notes() {
             placeholder="Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full mb-3 p-2 border rounded"
+            className="w-full mb-3 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
 
           <textarea
             placeholder="Content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            className="w-full mb-3 p-2 border rounded"
+            className="w-full mb-3 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
 
           <button
@@ -141,26 +141,26 @@ function Notes() {
                   <input
                     value={editTitle}
                     onChange={(e) => setEditTitle(e.target.value)}
-                    className="w-full mb-2 p-2 border rounded"
+                    className="w-full mb-3 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                   />
 
                   <textarea
                     value={editContent}
                     onChange={(e) => setEditContent(e.target.value)}
-                    className="w-full mb-2 p-2 border rounded"
+                    className="w-full mb-3 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                   />
 
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleUpdate(note._id)}
-                      className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+                      className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600"
                     >
                       Save
                     </button>
 
                     <button
                       onClick={() => setEditId(null)}
-                      className="bg-gray-400 text-white px-3 py-1 rounded hover:bg-gray-500"
+                      className="bg-gray-400 text-white px-3 py-1 rounded-md hover:bg-gray-500"
                     >
                       Cancel
                     </button>
@@ -175,7 +175,7 @@ function Notes() {
                   <div className="flex gap-2 mt-3">
                     <button
                       onClick={() => handleEdit(note)}
-                      className="bg-yellow-400 px-3 py-1 rounded hover:bg-yellow-500"
+                      className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600"
                     >
                       Edit
                     </button>
