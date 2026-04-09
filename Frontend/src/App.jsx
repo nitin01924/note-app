@@ -6,6 +6,8 @@ import Notes from "./pages/Notes.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
+
 //  FUNCTION - APP
 function App() {
   const [user, setUser] = useState(null);
