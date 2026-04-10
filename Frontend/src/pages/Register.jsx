@@ -12,10 +12,12 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+      setLoading(true);
       if (password !== confirmPassword) {
         toast.error("Passwords do not match !");
         return;
@@ -34,6 +36,8 @@ function Register() {
       console.log(res);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
