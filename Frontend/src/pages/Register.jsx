@@ -3,6 +3,7 @@ import { registerUser } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Input from "../components/Input";
+import { toast } from "react-toastify";
 
 function Register() {
   const navigate = useNavigate();
@@ -10,12 +11,15 @@ function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [confirmPassword, setconfirmPassword] = useState("");
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-
+      if (password !== confirmPassword) {
+        toast.error("Passwords do not match !");
+        return;
+      }
       if (!name || !email || !password) {
         alert("Please fill all fields");
         return;
@@ -30,8 +34,6 @@ function Register() {
       console.log(res);
     } catch (error) {
       console.error(error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -39,33 +41,38 @@ function Register() {
     <div className="flex items-center justify-center h-screen">
       <div className="w-80 p-6 shadow-lg rounded-lg flex flex-col gap-4">
         <h2 className="text-xl font-bold text-center">Register</h2>
+        <form onSubmit={handleSubmit}>
+          <Input
+            label="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
 
-        <Input
-          label="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+          <Input
+            label="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <Input
-          label="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          <Input
+            label="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Input
+            label="Confirm Password"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setconfirmPassword(e.target.value)}
+          />
 
-        <Input
-          label="Password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <Button type="submit">Register</Button>
+        </form>
 
-        <Button onClick={handleSubmit} loading={loading}>
-          Register
-        </Button>
-         <p onClick={() => navigate("/")}>Already have an account? Login</p>
+        <p onClick={() => navigate("/")}>Already have an account? Login</p>
       </div>
     </div>
-
   );
 }
 export default Register;
