@@ -5,8 +5,7 @@ import Register from "./pages/Register.jsx";
 import Notes from "./pages/Notes.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-
+import Navbar from "./components/Navbar.jsx";
 
 //  FUNCTION - APP
 function App() {
@@ -17,7 +16,10 @@ function App() {
     const checkAuth = async () => {
       try {
         const token = localStorage.getItem("token");
-
+        if (!token) {
+          setLoading(false);
+          return;
+        }
         const res = await fetch("http://localhost:3000/api/auth/me", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -43,6 +45,7 @@ function App() {
 
   return (
     <>
+      {user && <Navbar />}
       <Routes>
         <Route path="/" element={user ? <Navigate to="/notes" /> : <Login />} />
         <Route path="/register" element={<Register />} />
