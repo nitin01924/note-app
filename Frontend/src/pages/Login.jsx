@@ -56,6 +56,7 @@ function Login() {
         <Button onClick={handleSubmit} loading={loading}>
           Login
         </Button>
+       <p onClick={() => navigate("/register")}>Don't have an account? Register</p>
       </div>
     </div>
   );
