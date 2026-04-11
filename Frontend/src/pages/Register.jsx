@@ -67,12 +67,14 @@ function Register() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            showToggle
           />
           <Input
             label="Confirm Password"
             type="password"
             value={confirmPassword}
             onChange={(e) => setconfirmPassword(e.target.value)}
+            showToggle
           />
 
           <Button type="submit">Register</Button>

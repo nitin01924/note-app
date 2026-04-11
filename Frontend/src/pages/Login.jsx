@@ -51,6 +51,7 @@ function Login() {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          showToggle
         />
 
         <Button onClick={handleSubmit} loading={loading}>
