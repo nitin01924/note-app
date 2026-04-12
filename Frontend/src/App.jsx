@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar.jsx";
 function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -44,15 +45,17 @@ function App() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <>
-      {user && <Navbar />}
+    <div className={darkMode ? "dark min-h-screen" : "min-h-screen"}>
+      {user && <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />}
+
       <Routes>
         <Route path="/" element={user ? <Navigate to="/notes" /> : <Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/notes" element={user ? <Notes /> : <Navigate to="/" />} />
       </Routes>
+
       <ToastContainer position="top-right" autoClose={2000} />
-    </>
+    </div>
   );
 }
 
