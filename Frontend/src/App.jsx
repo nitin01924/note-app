@@ -6,6 +6,7 @@ import Notes from "./pages/Notes.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar.jsx";
+import { Analytics } from "@vercel/analytics/next";
 
 //  FUNCTION - APP
 function App() {
@@ -18,7 +19,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem("theme", darkMode ? "dark" : "light");
   }, [darkMode]);
-  
+
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -61,6 +62,7 @@ function App() {
       </Routes>
 
       <ToastContainer position="top-right" autoClose={2000} />
+      <Analytics />
     </div>
   );
 }
