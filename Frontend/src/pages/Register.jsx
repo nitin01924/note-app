@@ -33,6 +33,10 @@ function Register() {
       const data = { name, email, password };
       const res = await registerUser(data);
 
+      if (res){
+        toast.success("User Registered")
+      }
+
       // storing the token in localstorage when user register (signup)
       localStorage.setItem("token", res.token);
       navigate("/notes");

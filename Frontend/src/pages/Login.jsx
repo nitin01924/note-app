@@ -3,6 +3,7 @@ import { loginUser } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Input from "../components/Input";
+import { toast } from "react-toastify";
 
 function Login() {
   const navigate = useNavigate();
@@ -28,8 +29,11 @@ function Login() {
 
       console.log(res);
     } catch (error) {
-      // error handling
-      console.error(error);
+      toast.error(error.message)
+
+      setTimeout(() => {
+        navigate("/register");
+      }, 1500);
     } finally {
       setLoading(false); //make state:false of setloading
     }
@@ -57,7 +61,9 @@ function Login() {
         <Button onClick={handleSubmit} loading={loading}>
           Login
         </Button>
-       <p onClick={() => navigate("/register")}>Don't have an account? Register</p>
+        <p onClick={() => navigate("/register")}>
+          Don't have an account? Register
+        </p>
       </div>
     </div>
   );

@@ -45,7 +45,7 @@ export const loginUser = asyncHandler(async (req, res) => {
 
   if (!user) {
     return res.status(401).json({
-      message: "user does not exist, register it",
+      message: "User not found",
     });
   }
 
