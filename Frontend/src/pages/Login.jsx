@@ -32,9 +32,7 @@ function Login({ onAuthSuccess }) {
       toast.error(message);
 
       if (message.toLowerCase().includes("register")) {
-        setTimeout(() => {
-          navigate("/register");
-        }, 1500);
+        navigate("/register");
       }
     } finally {
       setLoading(false);
