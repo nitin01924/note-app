@@ -1,7 +1,7 @@
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
 
-function Navbar({ darkMode, setDarkMode }) {
+function Navbar({ darkMode, setDarkMode, onLogout }) {
   const navigate = useNavigate();
 
   return (
@@ -12,7 +12,7 @@ function Navbar({ darkMode, setDarkMode }) {
         <Button
           variant="danger"
           onClick={() => {
-            localStorage.removeItem("token");
+            onLogout();
             navigate("/");
           }}
         >

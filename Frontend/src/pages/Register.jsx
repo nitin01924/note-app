@@ -5,7 +5,7 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import { toast } from "react-toastify";
 
-function Register() {
+function Register({ onAuthSuccess }) {
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -37,8 +37,7 @@ function Register() {
         toast.success("User Registered")
       }
 
-      // storing the token in localstorage when user register (signup)
-      localStorage.setItem("token", res.token);
+      onAuthSuccess(res.token);
       navigate("/notes");
 
       console.log(res);

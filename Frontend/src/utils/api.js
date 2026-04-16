@@ -14,10 +14,15 @@ export const apiRequest = async (endpoint, options = {}) => {
 
   const data = await res.json();
 
-    if (res.status === 401) {
+  if (
+    res.status === 401 &&
+    token &&
+    !endpoint.startsWith("/auth/login") &&
+    !endpoint.startsWith("/auth/register")
+  ) {
     localStorage.removeItem("token");
     window.location.href = "/";
-    return;
+    throw new Error(data.message || "Session expired. Please log in again.");
   }
 
   if (!res.ok) {

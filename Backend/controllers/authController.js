@@ -44,8 +44,16 @@ export const loginUser = asyncHandler(async (req, res) => {
   );
 
   if (!user) {
+    return res.status(404).json({
+      message: "User not found. Please register first.",
+    });
+  }
+
+  const isPasswordMatched = await user.matchPassword(password);
+
+  if (!isPasswordMatched) {
     return res.status(401).json({
-      message: "User not found",
+      message: "Invalid email or password",
     });
   }
 

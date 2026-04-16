@@ -5,7 +5,7 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import { toast } from "react-toastify";
 
-function Login() {
+function Login({ onAuthSuccess }) {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -15,27 +15,29 @@ function Login() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+      setLoading(true);
 
       if (!email || !password) {
         alert("Please fill all fields");
         return;
       }
+
       const data = { email, password };
       const res = await loginUser(data);
 
-      localStorage.setItem("token", res.token);
-      window.location.reload();
+      onAuthSuccess(res.token);
       navigate("/notes");
-
-      console.log(res);
     } catch (error) {
-      toast.error(error.message)
+      const message = error.message || "Unable to login";
+      toast.error(message);
 
-      setTimeout(() => {
-        navigate("/register");
-      }, 1500);
+      if (message.toLowerCase().includes("register")) {
+        setTimeout(() => {
+          navigate("/register");
+        }, 1500);
+      }
     } finally {
-      setLoading(false); //make state:false of setloading
+      setLoading(false);
     }
   };
 
