@@ -51,14 +51,22 @@ function App() {
 
   if (loading) return <p>Loading...</p>;
 
+  const token = localStorage.getItem("token");
+
   return (
     <div className={darkMode ? "dark min-h-screen" : "min-h-screen"}>
-      {user && <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />}
+      {token && <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />}
 
       <Routes>
-        <Route path="/" element={user ? <Navigate to="/notes" /> : <Login />} />
+        <Route
+          path="/"
+          element={token ? <Navigate to="/notes" /> : <Login />}
+        />
         <Route path="/register" element={<Register />} />
-        <Route path="/notes" element={user ? <Notes /> : <Navigate to="/" />} />
+        <Route
+          path="/notes"
+          element={token ? <Notes /> : <Navigate to="/" />}
+        />
       </Routes>
 
       <ToastContainer position="top-right" autoClose={2000} />
