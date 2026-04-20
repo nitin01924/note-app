@@ -18,10 +18,6 @@ function Register({ onAuthSuccess }) {
     try {
       e.preventDefault();
       setLoading(true);
-      if (password !== confirmPassword) {
-        toast.error("Passwords do not match !");
-        return;
-      }
       if (!name || !email || !password) {
         alert("Please fill all fields");
         return;
@@ -30,6 +26,11 @@ function Register({ onAuthSuccess }) {
         toast.error("Password must be at least 8 characters long");
         return;
       }
+      if (password !== confirmPassword) {
+        toast.error("Passwords does not match!");
+        return;
+      }
+
       const data = { name, email, password };
       const res = await registerUser(data);
 
@@ -41,6 +42,7 @@ function Register({ onAuthSuccess }) {
       navigate("/notes");
 
       console.log(res);
+      
     } catch (error) {
       console.error(error);
     } finally {
