@@ -1,6 +1,9 @@
 import asyncHandler from "../middlewares/asyncHandler.js";
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
+import * as crypto from "crypto";
+import { sendVerificationEmail } from "../utils/sendEmail.js";
+
 
 export const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -28,12 +31,14 @@ export const registerUser = asyncHandler(async (req, res) => {
   });
 
   await sendVerificationEmail(user.email, token);
-  
+
   res.status(201).json({
     message: "Check your email to verify account",
   });
 });
-
+//
+//
+//
 export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -51,6 +56,12 @@ export const loginUser = asyncHandler(async (req, res) => {
   if (!user) {
     return res.status(404).json({
       message: "User not found. Please register first.",
+    });
+  }
+
+  if (!user.isVerified) {
+    return res.status(401).json({
+      message: "Please verify your email first",
     });
   }
 
