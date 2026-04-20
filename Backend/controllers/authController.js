@@ -4,7 +4,6 @@ import generateToken from "../utils/generateToken.js";
 import * as crypto from "crypto";
 import { sendVerificationEmail } from "../utils/sendEmail.js";
 
-
 export const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -87,3 +86,23 @@ export const getMe = (req, res) => {
     user: req.user,
   });
 };
+
+//
+// !!==================== Verify_email================!!
+
+export const verifyEmail = asyncHandler(async (req, res) => {
+  const { token } = req.query;
+
+  const user = await User.findOne({ verificationToken: token });
+
+  if (!user) {
+    return res.status(400).json({ message: "Invalid token" });
+  }
+
+  user.isVerified = true;
+  user.verificationToken = null;
+
+  await user.save();
+
+  res.json({ message: "Email verified successfully" });
+});
