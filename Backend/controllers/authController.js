@@ -19,13 +19,18 @@ export const registerUser = asyncHandler(async (req, res) => {
     });
   }
 
-  const user = await User.create({ name, email: normalizedEmail, password });
+  const token = crypto.randomBytes(32).toString("hex");
+  const user = await User.create({
+    name,
+    email: normalizedEmail,
+    password,
+    verificationToken: token,
+  });
 
+  await sendVerificationEmail(user.email, token);
+  
   res.status(201).json({
-    id: user._id,
-    name: user.name,
-    email: user.email,
-    token: generateToken(user._id),
+    message: "Check your email to verify account",
   });
 });
 
