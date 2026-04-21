@@ -10,7 +10,7 @@ export const sendVerificationEmail = async (email, token) => {
       },
     });
 
-    const verifyLink = `http://localhost:5173/verify-email?token=${token}`;
+    const verifyLink = `${process.env.CLIENT_URL}/verify-email?token=${token}`;
 
     await transporter.sendMail({
       from: `"Notes App" <${process.env.EMAIL_USER}>`,
