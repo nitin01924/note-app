@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar.jsx";
 import { Analytics } from "@vercel/analytics/react";
+import VerifyEmail from "./pages/VerifyEmail.jsx";
 
 //  FUNCTION - APP
 function App() {
@@ -95,6 +96,7 @@ function App() {
           path="/notes"
           element={token ? <Notes /> : <Navigate to="/" />}
         />
+        <Route path="/verify-email" element={<VerifyEmail />} />
       </Routes>
 
       <ToastContainer position="top-right" autoClose={2000} />
