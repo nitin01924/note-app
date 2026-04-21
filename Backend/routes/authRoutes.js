@@ -2,7 +2,8 @@ import {
   registerUser,
   loginUser,
   getMe,
-  verifyEmail
+  verifyEmail,
+  resendVerificationEmail,
 } from "../controllers/authController.js";
 import { protect } from "../middlewares/authMiddleware.js";
 import express from "express";
@@ -13,5 +14,6 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/me", protect, getMe);
 router.get("/verify-email", verifyEmail);
+router.post("/resend-verification", resendVerificationEmail);
 
 export default router;

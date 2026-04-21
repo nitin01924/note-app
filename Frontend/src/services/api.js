@@ -56,3 +56,19 @@ export const updateNote = async (id, notedata) => {
 
   return result;
 };
+
+// ResendVerification
+export const resendVerification = async (email) => {
+  const res = await fetch(
+    `${import.meta.env.VITE_API_URL}/auth/resend-verification`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    },
+  );
+
+  return res.json();
+};

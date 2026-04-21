@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { loginUser } from "../services/api";
+import { loginUser, resendVerification } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Input from "../components/Input";
@@ -11,11 +11,23 @@ function Login({ onAuthSuccess }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showResend, setShowResend] = useState(false); 
+
+  // handle resend
+  const handleResend = async () => {
+    try {
+      const res = await resendVerification(email);
+      toast.success(res.message);
+    } catch (err) {
+      toast.error("Failed to resend email");
+    }
+  };
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
       setLoading(true);
+      setShowResend(false); // reset the button
 
       if (!email || !password) {
         alert("Please fill all fields");
@@ -31,6 +43,12 @@ function Login({ onAuthSuccess }) {
       const message = error.message || "Unable to login";
       toast.error(message);
 
+      // show resend button if not verified
+      if (message.toLowerCase().includes("verify")) {
+        setShowResend(true);
+      }
+
+      // redirect to register if user not found
       if (message.toLowerCase().includes("register")) {
         navigate("/register");
       }
@@ -61,6 +79,17 @@ function Login({ onAuthSuccess }) {
         <Button onClick={handleSubmit} loading={loading}>
           Login
         </Button>
+
+        {/*  resend button */}
+        {showResend && (
+          <button
+            onClick={handleResend}
+            className="text-blue-500 underline text-sm"
+          >
+            Resend Verification Email
+          </button>
+        )}
+
         <p onClick={() => navigate("/register")}>
           Don't have an account? Register
         </p>

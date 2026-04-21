@@ -109,3 +109,29 @@ export const verifyEmail = asyncHandler(async (req, res) => {
 
   res.json({ message: "Email verified successfully" });
 });
+
+//
+// !!==================== Resend-Verification ================!!
+
+export const resendVerificationEmail = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+
+  const user = await User.findOne({ email: email.toLowerCase() });
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  if (user.isVerified) {
+    return res.json({ message: "Email already verified" });
+  }
+
+  const token = crypto.randomBytes(32).toString("hex");
+
+  user.verificationToken = token;
+  await user.save();
+
+  await sendVerificationEmail(user.email, token);
+
+  res.json({ message: "Verification email resent" });
+});
