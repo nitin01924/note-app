@@ -1,18 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import {toast} from "react-toastify";
 
 function VerifyEmail() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+
+  const [status, setStatus] = useState("loading"); // loading | success | error
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const verify = async () => {
       const token = searchParams.get("token");
 
       if (!token) {
-        toast.error("Invalid verification link");
-        return navigate("/");
+        setStatus("error");
+        setMessage("Invalid verification link");
+        return;
       }
 
       try {
@@ -24,14 +27,15 @@ function VerifyEmail() {
 
         if (!res.ok) throw new Error(data.message);
 
-        toast.success("Email verified successfully!");
+        setStatus("success");
+        setMessage(data.message || "Email verified successfully");
 
         setTimeout(() => {
           navigate("/");
         }, 2000);
       } catch (error) {
-        toast.error(error.message || "Verification failed");
-        navigate("/");
+        setStatus("error");
+        setMessage(error.message || "Verification failed");
       }
     };
 
@@ -39,8 +43,10 @@ function VerifyEmail() {
   }, [searchParams, navigate]);
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <h2 className="text-lg font-semibold">Verifying your email...</h2>
+    <div className="flex items-center justify-center h-screen text-center">
+      {status === "loading" && <h2>Verifying your email...</h2>}
+      {status === "success" && <h2 className="text-green-500">{message}</h2>}
+      {status === "error" && <h2 className="text-red-500">{message}</h2>}
     </div>
   );
 }
