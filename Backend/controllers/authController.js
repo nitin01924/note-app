@@ -96,7 +96,10 @@ export const verifyEmail = asyncHandler(async (req, res) => {
   const user = await User.findOne({ verificationToken: token });
 
   if (!user) {
-    return res.status(400).json({ message: "Invalid token" });
+    return res.status(400).json({ message: "Invalid or expired token" });
+  }
+  if (user.isVerified) {
+    return res.json({ message: "Email already verified" });
   }
 
   user.isVerified = true;
