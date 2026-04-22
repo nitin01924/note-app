@@ -98,24 +98,24 @@ function Notes() {
 
   // ======= JSX (React UI) ======= //
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-black dark:text-white flex flex-col items-center py-10">
+    <div className="min-h-screen bg-gray-100 dark:bg-black text-black dark:text-white flex flex-col items-center py-10">
       <h1 className="text-3xl font-bold mb-6">My Notes</h1>
 
-      <div className="w-full max-w-md bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+      <div className="w-full max-w-md bg-white dark:bg-black p-6 rounded-xl shadow">
         <form onSubmit={handleSubmit}>
           <input
             type="text"
             placeholder="Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full mb-3 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white dark:bg-gray-700 text-black dark:text-white"
+            className="w-full mb-3 p-2 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white dark:bg-gray-950 text-black dark:text-white"
           />
 
           <textarea
             placeholder="Content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            className="w-full mb-3 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white dark:bg-gray-700 text-black dark:text-white"
+            className="w-full mb-3 p-2 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white dark:bg-gray-950 text-black dark:text-white"
           />
 
           <button
@@ -138,7 +138,7 @@ function Notes() {
           notes.map((note) => (
             <div
               key={note._id}
-              className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow"
+              className="bg-white dark:bg-gray-950 border border-gray-700 p-4 rounded-xl shadow"
             >
               {editId === note._id ? (
                 <>
@@ -146,26 +146,26 @@ function Notes() {
                   <input
                     value={editTitle}
                     onChange={(e) => setEditTitle(e.target.value)}
-                    className="w-full mb-3 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white dark:bg-gray-700 text-black dark:text-white"
+                    className="w-full mb-3 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white dark:bg-gray-950 text-black dark:text-white"
                   />
 
                   <textarea
                     value={editContent}
                     onChange={(e) => setEditContent(e.target.value)}
-                    className="w-full mb-3 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white dark:bg-gray-700 text-black dark:text-white"
+                    className="w-full mb-3 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white dark:bg-gray-950 text-black dark:text-white"
                   />
 
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleUpdate(note._id)}
-                      className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600"
+                      className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-700"
                     >
                       Save
                     </button>
 
                     <button
                       onClick={() => setEditId(null)}
-                      className="bg-gray-400 text-white px-3 py-1 rounded-md hover:bg-gray-500"
+                      className="bg-gray-700 text-white px-3 py-1 rounded-md hover:bg-gray-800"
                     >
                       Cancel
                     </button>
