@@ -3,9 +3,20 @@ import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
 import * as crypto from "crypto";
 import { sendVerificationEmail } from "../utils/sendEmail.js";
+import { loginSchema, registerSchema } from "../validators/authValidator.js";
+
+//
+// !!==================== Register-User ====================!!
 
 export const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
+
+  const { error } = registerSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({
+      message: error.details[0].message,
+    });
+  }
 
   if (!name || !email || !password) {
     return res.status(400).json({
@@ -35,11 +46,19 @@ export const registerUser = asyncHandler(async (req, res) => {
     message: "Check your email to verify account",
   });
 });
+
 //
-//
-//
+// !!==================== Login-User ====================!!
+
 export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+
+  const { error } = loginSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({
+      message: error.details[0].message,
+    });
+  }
 
   if (!email || !password) {
     return res.status(400).json({
