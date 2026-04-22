@@ -1,4 +1,7 @@
 const API_URL = import.meta.env.VITE_API_URL;
+import { useNavigate } from "react-router-dom";
+
+const navigate = useNavigate();
 
 export const apiRequest = async (endpoint, options = {}) => {
   const token = localStorage.getItem("token");
@@ -12,16 +15,16 @@ export const apiRequest = async (endpoint, options = {}) => {
     },
   });
 
-  const data = await res.json();
+  let data; // instead ( const data = await res.json(); )
+  try {
+    data = await res.json();
+  } catch {
+    data = {}; // Justincase: if backend sends HTML error.
+  }
 
-  if (
-    res.status === 401 &&
-    token &&
-    !endpoint.startsWith("/auth/login") &&
-    !endpoint.startsWith("/auth/register")
-  ) {
+  if (res.status === 401 && token) {
     localStorage.removeItem("token");
-    window.location.href = "/";
+    navigate("/");
     throw new Error(data.message || "Session expired. Please log in again.");
   }
 
