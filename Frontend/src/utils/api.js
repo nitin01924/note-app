@@ -1,8 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL;
-import { useNavigate } from "react-router-dom";
 
-const navigate = useNavigate();
-
+//
 export const apiRequest = async (endpoint, options = {}) => {
   const token = localStorage.getItem("token");
 
@@ -24,7 +22,7 @@ export const apiRequest = async (endpoint, options = {}) => {
 
   if (res.status === 401 && token) {
     localStorage.removeItem("token");
-    navigate("/");
+    window.location.href = "/";
     throw new Error(data.message || "Session expired. Please log in again.");
   }
 

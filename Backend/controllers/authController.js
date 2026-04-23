@@ -2,7 +2,10 @@ import asyncHandler from "../middlewares/asyncHandler.js";
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
 import * as crypto from "crypto";
-import { sendVerificationEmail } from "../utils/sendEmail.js";
+import {
+  sendResetPasswordEmail,
+  sendVerificationEmail,
+} from "../utils/sendEmail.js";
 import { loginSchema, registerSchema } from "../validators/authValidator.js";
 
 //
@@ -175,7 +178,7 @@ export const forgotPassword = asyncHandler(async (req, res) => {
   await user.save();
 
   const resetLink = `${process.env.CLIENT_URL}/reset-password?token=${resetToken}`;
-  await sendVerificationEmail(user.email, resetToken);
+  await sendResetPasswordEmail(user.email, resetToken);
 
   res.json({ message: "Password reset email sent" });
 });
