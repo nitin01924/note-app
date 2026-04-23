@@ -11,7 +11,7 @@ function Login({ onAuthSuccess }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showResend, setShowResend] = useState(false); 
+  const [showResend, setShowResend] = useState(false);
 
   // handle resend
   const handleResend = async () => {
@@ -75,6 +75,13 @@ function Login({ onAuthSuccess }) {
           onChange={(e) => setPassword(e.target.value)}
           showToggle
         />
+
+        <p
+          onClick={() => navigate("/forgot-password")}
+          className="text-sm text-blue-500 cursor-pointer"
+        >
+          Forgot Password?
+        </p>
 
         <Button onClick={handleSubmit} loading={loading}>
           Login
