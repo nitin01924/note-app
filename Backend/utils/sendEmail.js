@@ -20,10 +20,45 @@ export const sendVerificationEmail = async (email, token) => {
       to: email,
       subject: "Verify your email",
       html: `
-        <h2>Welcome to Notes App</h2>
-        <p>Click below to verify your email:</p>
-        <a href="${verifyLink}">Verify Email</a>
-      `,
+  <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+    
+    <h2 style="color: #111;">Verify your email</h2>
+
+    <p>Hi,</p>
+
+    <p>
+      Welcome to <b>Notes App</b> 🧧
+    </p>
+
+    <p>
+      Please confirm your email address to activate your account.
+    </p>
+
+    <a href="${verifyLink}" 
+       style="
+         display: inline-block;
+         padding: 10px 16px;
+         background-color: #16a34a;
+         color: #fff;
+         text-decoration: none;
+         border-radius: 6px;
+         margin-top: 10px;
+       ">
+       Verify Email
+    </a>
+
+    <p style="margin-top: 20px;">
+      If you didn’t create this account, you can safely ignore this email.
+    </p>
+
+    <hr style="margin: 20px 0;" />
+
+    <p style="font-size: 12px; color: #777;">
+      — Notes App Team
+    </p>
+
+  </div>
+`,
     });
 
     console.log("✅ Email sent");
