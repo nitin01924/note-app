@@ -9,7 +9,9 @@ import Navbar from "./components/Navbar.jsx";
 import { Analytics } from "@vercel/analytics/react";
 import VerifyEmail from "./pages/VerifyEmail.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
+import ResetPassword from "./pages/ResetPassword.jsx";
 
+//
 //  FUNCTION - APP
 function App() {
   const [user, setUser] = useState(null);
@@ -98,7 +100,8 @@ function App() {
           element={token ? <Notes /> : <Navigate to="/" />}
         />
         <Route path="/verify-email" element={<VerifyEmail />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
       <ToastContainer position="top-right" autoClose={2000} />
       <Analytics />
