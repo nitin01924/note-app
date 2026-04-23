@@ -154,3 +154,54 @@ export const resendVerificationEmail = asyncHandler(async (req, res) => {
 
   res.json({ message: "Verification email resent" });
 });
+
+//
+// !!==================== Forgot-Password ====================!!
+
+export const forgotPassword = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email: email.toLowerCase() });
+
+  if (!user) {
+    res.status(400).json({
+      message: "User not found",
+    });
+  }
+
+  const resetToken = crypto.randomBytes(32).toString("hex");
+  user.resetPasswordToken = resetToken;
+  user.resetPasswordExpires = Date.now() + 10 * 60 * 1000; // time = 10 minutes.
+
+  await user.save();
+
+  const resetLink = `${process.env.CLIENT_URL}/reset-password?token=${resetToken}`;
+  await sendVerificationEmail(user.email, resetToken);
+
+  res.json({ message: "Password reset email sent" });
+});
+
+//
+// !!==================== Reset-Password ====================!!
+
+export const resetPassword = asyncHandler(async (req, res) => {
+  const { token } = req.query;
+  const { password } = req.body;
+
+  const user = await User.findOne({
+    resetPasswordToken: token,
+    resetPasswordExpires: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return res.status(400).json({
+      message: "invalid or expired token",
+    });
+  }
+
+  user.password = password;
+  user.resetPasswordToken = null;
+  user.resetPasswordExpires = null;
+
+  await user.save();
+  res.json({ message: "Password reset successful" });
+});
