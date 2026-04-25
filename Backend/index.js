@@ -4,6 +4,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import noteRoutes from "./routes/noteRoutes.js";
+import { errorHandler } from "./middlewares/errorMiddleware.js";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
   res.send("API running...");
 });
 
+app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 
 // STARTING SERVER

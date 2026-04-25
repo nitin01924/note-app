@@ -22,17 +22,16 @@ export const registerUser = asyncHandler(async (req, res) => {
   }
 
   if (!name || !email || !password) {
-    return res.status(400).json({
-      message: "The data fields are empty",
-    });
+    res.status(400);
+    throw new Error("The data fields are empty");
   }
+
   const normalizedEmail = email.toLowerCase();
 
   const existingUser = await User.findOne({ email: normalizedEmail });
   if (existingUser) {
-    return res.status(400).json({
-      message: "User already exists",
-    });
+    res.status(400);
+    throw new Error("User already exists");
   }
 
   const token = crypto.randomBytes(32).toString("hex");
@@ -64,9 +63,8 @@ export const loginUser = asyncHandler(async (req, res) => {
   }
 
   if (!email || !password) {
-    return res.status(400).json({
-      message: "email and password are required.",
-    });
+    res.status(400);
+    throw new Error("email and password are required");
   }
 
   const normalizedEmail = email.toLowerCase();
@@ -75,23 +73,20 @@ export const loginUser = asyncHandler(async (req, res) => {
   );
 
   if (!user) {
-    return res.status(404).json({
-      message: "User not found. Please register first.",
-    });
+    res.status(404);
+    throw new Error("User not found. Please register first.");
   }
 
   if (!user.isVerified) {
-    return res.status(401).json({
-      message: "Please verify your email first",
-    });
+    res.status(401);
+    throw new Error("Please verify your email first");
   }
 
   const isPasswordMatched = await user.matchPassword(password);
 
   if (!isPasswordMatched) {
-    return res.status(401).json({
-      message: "Invalid email or password",
-    });
+    res.status(401);
+    throw new Error("Invalid email or password");
   }
 
   res.status(201).json({
@@ -118,7 +113,8 @@ export const verifyEmail = asyncHandler(async (req, res) => {
   const user = await User.findOne({ verificationToken: token });
 
   if (!user) {
-    return res.status(400).json({ message: "Invalid or expired token" });
+    res.status(400);
+    throw new Error("Invalid or expired token");
   }
   if (user.isVerified) {
     return res.json({ message: "Email already verified" });
@@ -141,7 +137,8 @@ export const resendVerificationEmail = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email: email.toLowerCase() });
 
   if (!user) {
-    return res.status(404).json({ message: "User not found" });
+    res.status(404);
+    throw new Error("User not found");
   }
 
   if (user.isVerified) {
@@ -166,9 +163,8 @@ export const forgotPassword = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email: email.toLowerCase() });
 
   if (!user) {
-    res.status(400).json({
-      message: "User not found",
-    });
+    res.status(400);
+    throw new Error("User not found");
   }
 
   const resetToken = crypto.randomBytes(32).toString("hex");
@@ -196,11 +192,7 @@ export const resetPassword = asyncHandler(async (req, res) => {
   const { token } = req.query;
   const { password } = req.body;
 
-  const hashedToken = crypto
-  .createHash("sha256")
-  .update(token)
-  .digest("hex");
-
+  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
   const user = await User.findOne({
     resetPasswordToken: hashedToken,
@@ -208,15 +200,13 @@ export const resetPassword = asyncHandler(async (req, res) => {
   });
 
   if (!user) {
-    return res.status(400).json({
-      message: "invalid or expired token",
-    });
+    res.status(400);
+    throw new Error("invalid or expired token");
   }
 
   if (password.length < 8) {
-    return res.status(400).json({
-      message: "Password must be at least 8 characters",
-    });
+    res.status(400);
+    throw new Error("Password must be at least 8 characters");
   }
 
   user.password = password;
