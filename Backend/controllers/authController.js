@@ -172,7 +172,13 @@ export const forgotPassword = asyncHandler(async (req, res) => {
   }
 
   const resetToken = crypto.randomBytes(32).toString("hex");
-  user.resetPasswordToken = resetToken;
+
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  user.resetPasswordToken = hashedToken;
   user.resetPasswordExpires = Date.now() + 10 * 60 * 1000; // time = 10 minutes.
 
   await user.save();
@@ -190,8 +196,14 @@ export const resetPassword = asyncHandler(async (req, res) => {
   const { token } = req.query;
   const { password } = req.body;
 
+  const hashedToken = crypto
+  .createHash("sha256")
+  .update(token)
+  .digest("hex");
+
+
   const user = await User.findOne({
-    resetPasswordToken: token,
+    resetPasswordToken: hashedToken,
     resetPasswordExpires: { $gt: Date.now() },
   });
 

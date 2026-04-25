@@ -34,7 +34,7 @@ export const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
-export const authLimiter = rateLimit({
+ export const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, //15 min
   max: 10, // max 10 requests from each IP in 15 min.
   message: {
