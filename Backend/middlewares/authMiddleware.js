@@ -1,7 +1,7 @@
 import asyncHandler from "./asyncHandler.js";
 import User from "../models/User.js";
-import jwt from "jsonwebtoken"
-
+import jwt from "jsonwebtoken";
+import rateLimit from "express-rate-limit";
 
 export const protect = asyncHandler(async (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -32,4 +32,12 @@ export const protect = asyncHandler(async (req, res, next) => {
       message: "Invalid token",
     });
   }
+});
+
+export const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, //15 min
+  max: 10, // max 10 requests from each IP in 15 min.
+  message: {
+    message: "Too many requests, please try again later",
+  },
 });
