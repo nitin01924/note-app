@@ -201,7 +201,14 @@ export const resetPassword = asyncHandler(async (req, res) => {
     });
   }
 
+  if (password.length < 8) {
+    return res.status(400).json({
+      message: "Password must be at least 8 characters",
+    });
+  }
+
   user.password = password;
+  user.markModified("password"); //  force update
   user.resetPasswordToken = null;
   user.resetPasswordExpires = null;
 

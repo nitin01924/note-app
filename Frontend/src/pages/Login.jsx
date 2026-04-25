@@ -49,7 +49,7 @@ function Login({ onAuthSuccess }) {
       }
 
       // redirect to register if user not found
-      if (message.toLowerCase().includes("register")) {
+      if (error.message.toLowerCase().includes("not found")) {
         navigate("/register");
       }
     } finally {
