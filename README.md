@@ -89,13 +89,19 @@ npm run dev
 ## 📸 Screenshots
 
 ### Login
-![Login](./screenshots/login.png)
+<p align="center">
+  <img src="./screenshots/login.png" alt="Login" width="300"/>
+</p>
 
 ### Register
-![Register](./screenshots/register.png)
+<p align="center">
+  <img src="./screenshots/register.png" alt="Login" width="300"/>
+</p>
 
 ### Notes Dashboard
-![Notes](./screenshots/notes.png)
+<p align="center">
+  <img src="./screenshots/notes.png" alt="Login" width="300"/>
+</p>
 
 ## 📌 Notes
 * Password reset tokens are securely hashed
