@@ -17,7 +17,7 @@ export const loginUser = async (data) => {
     body: JSON.stringify(data),
   });
 
-  return result;
+  return result.data;
 };
 
 // CREATE NOTES (PUSH)

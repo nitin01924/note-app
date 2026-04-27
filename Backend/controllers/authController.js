@@ -45,6 +45,7 @@ export const registerUser = asyncHandler(async (req, res) => {
   await sendVerificationEmail(user.email, token);
 
   res.status(201).json({
+    success: true,
     message: "Check your email to verify account",
   });
 });
@@ -90,10 +91,14 @@ export const loginUser = asyncHandler(async (req, res) => {
   }
 
   res.status(201).json({
-    name: user.name,
-    id: user._id,
-    email: user.email,
-    token: generateToken(user._id),
+    success: true,
+    message: "User has been logged-in",
+    data: {
+      name: user.name,
+      id: user._id,
+      email: user.email,
+      token: generateToken(user._id),
+    },
   });
 });
 
@@ -125,7 +130,7 @@ export const verifyEmail = asyncHandler(async (req, res) => {
 
   await user.save();
 
-  res.json({ message: "Email verified successfully" });
+  res.json({ success: true, message: "Email verified successfully" });
 });
 
 //
@@ -152,7 +157,7 @@ export const resendVerificationEmail = asyncHandler(async (req, res) => {
 
   await sendVerificationEmail(user.email, token);
 
-  res.json({ message: "Verification email resent" });
+  res.json({ success: true, message: "Verification email resent" });
 });
 
 //
@@ -182,7 +187,7 @@ export const forgotPassword = asyncHandler(async (req, res) => {
   const resetLink = `${process.env.CLIENT_URL}/reset-password?token=${resetToken}`;
   await sendResetPasswordEmail(user.email, resetToken);
 
-  res.json({ message: "Password reset email sent" });
+  res.json({ success: true, message: "Password reset email sent" });
 });
 
 //
@@ -215,5 +220,5 @@ export const resetPassword = asyncHandler(async (req, res) => {
   user.resetPasswordExpires = null;
 
   await user.save();
-  res.json({ message: "Password reset successful" });
+  res.json({ success: true, message: "Password reset successful" });
 });
