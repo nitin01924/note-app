@@ -121,7 +121,7 @@ function Notes() {
           <button
             disabled={loading}
             className={`w-full py-2 rounded ${
-              loading ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+              loading ? "bg-gray-400" : "bg-blue-700 hover:bg-blue-800"
             } text-white`}
           >
             {loading ? "Adding..." : "Add Note"}
@@ -182,14 +182,14 @@ function Notes() {
                   <div className="flex gap-2 mt-3">
                     <button
                       onClick={() => handleEdit(note)}
-                      className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600"
+                      className="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700"
                     >
                       Edit
                     </button>
 
                     <button
                       onClick={() => handleDelete(note._id)}
-                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                      className="bg-rose-700 text-white px-3 py-1 rounded hover:bg-rose-800"
                     >
                       Delete
                     </button>

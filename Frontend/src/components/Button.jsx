@@ -3,7 +3,7 @@ const Button = ({ children, variant = "primary", loading, ...props }) => {
 
   const variants = {
     primary: "bg-blue-500 hover:bg-blue-600 text-white",
-    danger: "bg-red-500 hover:bg-red-600 text-white",
+    danger: "bg-rose-700 hover:bg-red-600 text-white",
     success: "bg-green-500 hover:bg-green-600 text-white",
     warning: "bg-yellow-400 hover:bg-yellow-500 text-black",
     secondary: "bg-gray-400 hover:bg-gray-500 text-black",
