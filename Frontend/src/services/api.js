@@ -69,6 +69,5 @@ export const resendVerification = async (email) => {
       body: JSON.stringify({ email }),
     },
   );
-
   return res.json();
 };

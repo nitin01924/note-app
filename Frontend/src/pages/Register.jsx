@@ -34,15 +34,17 @@ function Register({ onAuthSuccess }) {
       const data = { name, email, password };
       const res = await registerUser(data);
 
-      if (res){
-        toast.success("User Registered")
+      if (res) {
+        toast.success("User Registered");
+        setTimeout(() => {
+          toast.success("check your Email to verify");
+        }, 2000);
       }
 
       onAuthSuccess(res.token);
       navigate("/notes");
 
       console.log(res);
-      
     } catch (error) {
       console.error(error);
     } finally {
