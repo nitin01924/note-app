@@ -1,38 +1,35 @@
 import nodemailer from "nodemailer";
+import brevo from "@getbrevo/brevo";
+
+
+const apiInstance = new brevo.TransactionalEmailsApi();
+
+apiInstance.setApiKey(
+  brevo.TransactionalEmailsApiApiKeys.apiKey,
+  process.env.BREVO_API_KEY
+);
 
 //
 // !!==================== VerificationEmail ====================!!
 
 export const sendVerificationEmail = async (email, token) => {
   try {
-    const transporter = nodemailer.createTransport({
-      host: "smtp-relay.brevo.com",
-      port: 587,
-      secure: false,
-
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    transporter.verify((error, success) => {
-      if (error) {
-        console.log("❌ Transporter Error:", error);
-      } else {
-        console.log("✅ Transporter Ready");
-      }
-    });
-
     const verifyLink = `${process.env.CLIENT_URL}/verify-email?token=${token}`;
 
-    console.log("📨 Sending email...");
+    console.log("📨 Sending verification email...");
 
-    await transporter.sendMail({
-      from: `"Notes App" <${process.env.EMAIL_USER}>`,
-      to: email,
-      subject: "Verify your email",
-      html: `
+    const sendSmtpEmail = new brevo.SendSmtpEmail();
+
+    sendSmtpEmail.sender = {
+      name: "Notes App",
+      email: "notesapp.system@gmail.com",
+    };
+
+    sendSmtpEmail.to = [{ email }];
+
+    sendSmtpEmail.subject = "Verify your email";
+
+    sendSmtpEmail.htmlContent = `
   <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
     
     <h2 style="color: #111;">Verify your email</h2>
@@ -71,46 +68,37 @@ export const sendVerificationEmail = async (email, token) => {
     </p>
 
   </div>
-`,
-    });
+`;
 
-    console.log("✅ Email sent");
+    await apiInstance.sendTransacEmail(sendSmtpEmail);
+
+    console.log("✅ Verification email sent");
   } catch (error) {
-    console.error("❌ Email error:", error.message);
+    console.error("❌ Verification email error:", error.message);
+    throw error;
   }
 };
-
 //
 // !!==================== Reset-Password_Email ====================!!
 
 export const sendResetPasswordEmail = async (email, token) => {
   try {
-    const transporter = nodemailer.createTransport({
-      host: "smtp-relay.brevo.com",
-      port: 587,
-      secure: false,
-
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    transporter.verify((error, success) => {
-      if (error) {
-        console.log("❌ Transporter Error:", error);
-      } else {
-        console.log("✅ Transporter Ready");
-      }
-    });
-
     const resetLink = `${process.env.CLIENT_URL}/reset-password?token=${token}`;
-    console.log("📨 Sending email...");
-    await transporter.sendMail({
-      from: `"Notes App" <${process.env.EMAIL_USER}>`,
-      to: email,
-      subject: "Reset your password",
-      html: `
+
+    console.log("📨 Sending reset password email...");
+
+    const sendSmtpEmail = new brevo.SendSmtpEmail();
+
+    sendSmtpEmail.sender = {
+      name: "Notes App",
+      email: "notesapp.system@gmail.com",
+    };
+
+    sendSmtpEmail.to = [{ email }];
+
+    sendSmtpEmail.subject = "Reset your password";
+
+    sendSmtpEmail.htmlContent = `
   <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
     
     <h2 style="color: #111;">Reset your password</h2>
@@ -153,11 +141,13 @@ export const sendResetPasswordEmail = async (email, token) => {
     </p>
 
   </div>
-`,
-    });
+`;
 
-    console.log("✅ Reset email sent");
+    await apiInstance.sendTransacEmail(sendSmtpEmail);
+
+    console.log("✅ Reset password email sent");
   } catch (error) {
-    console.error("❌ Reset email error:", error.message);
+    console.error("❌ Reset password email error:", error.message);
+    throw error;
   }
 };
