@@ -16,7 +16,17 @@ export const sendVerificationEmail = async (email, token) => {
       },
     });
 
+    transporter.verify((error, success) => {
+      if (error) {
+        console.log("❌ Transporter Error:", error);
+      } else {
+        console.log("✅ Transporter Ready");
+      }
+    });
+
     const verifyLink = `${process.env.CLIENT_URL}/verify-email?token=${token}`;
+
+    console.log("📨 Sending email...");
 
     await transporter.sendMail({
       from: `"Notes App" <${process.env.EMAIL_USER}>`,
@@ -86,8 +96,16 @@ export const sendResetPasswordEmail = async (email, token) => {
       },
     });
 
-    const resetLink = `${process.env.CLIENT_URL}/reset-password?token=${token}`;
+    transporter.verify((error, success) => {
+      if (error) {
+        console.log("❌ Transporter Error:", error);
+      } else {
+        console.log("✅ Transporter Ready");
+      }
+    });
 
+    const resetLink = `${process.env.CLIENT_URL}/reset-password?token=${token}`;
+    console.log("📨 Sending email...");
     await transporter.sendMail({
       from: `"Notes App" <${process.env.EMAIL_USER}>`,
       to: email,
