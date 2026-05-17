@@ -6,7 +6,7 @@ import nodemailer from "nodemailer";
 export const sendVerificationEmail = async (email, token) => {
   try {
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
+      host: "smtp-relay.brevo.com",
       port: 587,
       secure: false,
 
@@ -76,7 +76,7 @@ export const sendVerificationEmail = async (email, token) => {
 export const sendResetPasswordEmail = async (email, token) => {
   try {
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
+      host: "smtp-relay.brevo.com",
       port: 587,
       secure: false,
 
@@ -85,7 +85,7 @@ export const sendResetPasswordEmail = async (email, token) => {
         pass: process.env.EMAIL_PASS,
       },
     });
-    
+
     const resetLink = `${process.env.CLIENT_URL}/reset-password?token=${token}`;
 
     await transporter.sendMail({
