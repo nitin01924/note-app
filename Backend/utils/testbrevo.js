@@ -1,7 +1,8 @@
 import SibApiV3Sdk from "sib-api-v3-sdk";
 import dotenv from "dotenv";
 
-dotenv.config();
+// dotenv.config();
+dotenv.config({ path: "../.env" });
 
 const client = SibApiV3Sdk.ApiClient.instance;
 
