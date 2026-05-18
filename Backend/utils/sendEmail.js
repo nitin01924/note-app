@@ -1,26 +1,24 @@
 import SibApiV3Sdk from "sib-api-v3-sdk";
 
-const defaultClient = SibApiV3Sdk.ApiClient.instance;
-
-defaultClient.authentications["api-key"].apiKey =
-  process.env.BREVO_API_KEY;
-
-const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
-
 //
 // !!==================== Verification Email ====================!!
 //
 
 export const sendVerificationEmail = async (email, token) => {
+  const defaultClient = SibApiV3Sdk.ApiClient.instance;
+
+  defaultClient.authentications["api-key"].apiKey = process.env.BREVO_API_KEY;
+
+  const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
   try {
     const verifyLink = `${process.env.CLIENT_URL}/verify-email?token=${token}`;
-console.log(process.env.BREVO_API_KEY);
+    console.log(process.env.BREVO_API_KEY);
     console.log("📨 Sending verification email...");
 
     await apiInstance.sendTransacEmail({
       sender: {
         name: "Notes App",
-        email: "notesapp.system@gmail.com",
+        email: process.env.BREVO_SENDER_EMAIL,
       },
 
       to: [
@@ -75,7 +73,12 @@ console.log(process.env.BREVO_API_KEY);
 
     console.log("✅ Verification email sent");
   } catch (error) {
-    console.error("❌ Verification email error:", error.message);
+    console.log("FULL ERROR:");
+    console.log(error);
+
+    console.log("RESPONSE BODY:");
+    console.log(error.response?.body);
+
     throw error;
   }
 };
@@ -85,6 +88,12 @@ console.log(process.env.BREVO_API_KEY);
 //
 
 export const sendResetPasswordEmail = async (email, token) => {
+  const defaultClient = SibApiV3Sdk.ApiClient.instance;
+
+  defaultClient.authentications["api-key"].apiKey = process.env.BREVO_API_KEY;
+
+  const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+
   try {
     const resetLink = `${process.env.CLIENT_URL}/reset-password?token=${token}`;
 
