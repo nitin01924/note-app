@@ -61,12 +61,12 @@ cd Backend
 npm install
 ```
 ## Create a .env file inside Backend:
-PORT=3000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
-EMAIL_USER=your_email
-EMAIL_PASS=your_app_password
-CLIENT_URL=http://localhost:5173
+* PORT=3000
+* MONGO_URI=your_mongodb_connection_string
+* JWT_SECRET=your_secret_key
+* BREVO_API_KEY=your_brevo_api_key
+* BREVO_SENDER_EMAIL=notesapp.system@gmail.com
+* CLIENT_URL=http://localhost:5173
 
 ## Run backend:
 ```bash
