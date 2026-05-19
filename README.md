@@ -78,6 +78,11 @@ cd Frontend
 npm install
 ```
 ## Create a .env file inside Frontend:
+* Main 
+```bash
+VITE_API_URL=https://note-app-backend-971i.onrender.com/api
+```
+* for Locat-host
 ```bash
 VITE_API_URL=http://localhost:3000/api
 ```
