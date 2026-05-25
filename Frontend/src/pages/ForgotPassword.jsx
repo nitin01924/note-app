@@ -2,10 +2,12 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { apiRequest } from "../utils/api";
 import { useNavigate } from "react-router-dom";
+import { Moon, Sun } from "lucide-react";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
 
   const navigate = useNavigate();
 
@@ -37,11 +39,36 @@ function ForgotPassword() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="w-80 p-6 shadow-lg rounded-lg flex flex-col gap-4">
-        <h2 className="text-xl font-bold text-center">Forgot Password</h2>
+    <div
+      className={`flex items-center justify-center h-screen transition-all duration-300 ${
+        darkMode ? "bg-black text-white" : "bg-white text-black"
+      }`}
+    >
+      {/* Floating Theme Toggle */}
+      <button
+        onClick={() => setDarkMode(!darkMode)}
+        className={`absolute top-5 right-5 p-3 rounded-full shadow-lg transition-all duration-300 ${
+          darkMode
+            ? "bg-zinc-800 hover:bg-zinc-700"
+            : "bg-gray-200 hover:bg-gray-300"
+        }`}
+      >
+        {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+      </button>
 
-        <p className="text-sm text-gray-500 text-center">
+      {/* Card */}
+      <div
+        className={`w-80 p-6 rounded-2xl shadow-2xl flex flex-col gap-4 border transition-all duration-300 ${
+          darkMode ? "bg-zinc-900 border-zinc-800" : "bg-white border-gray-200"
+        }`}
+      >
+        <h2 className="text-2xl font-bold text-center">Forgot Password</h2>
+
+        <p
+          className={`text-sm text-center ${
+            darkMode ? "text-gray-400" : "text-gray-500"
+          }`}
+        >
           Enter your email to receive a reset link
         </p>
 
@@ -49,7 +76,11 @@ function ForgotPassword() {
           <input
             type="email"
             placeholder="Enter your email"
-            className="p-2 border rounded-md"
+            className={`p-3 rounded-lg outline-none border transition-all duration-300 ${
+              darkMode
+                ? "bg-zinc-800 border-zinc-700 text-white placeholder:text-gray-500"
+                : "bg-white border-gray-300 text-black"
+            }`}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -57,7 +88,7 @@ function ForgotPassword() {
           <button
             type="submit"
             disabled={loading}
-            className="bg-blue-500 text-white py-2 rounded-md"
+            className="bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg transition-all duration-300 font-medium"
           >
             {loading ? "Sending..." : "Send Reset Link"}
           </button>
@@ -65,7 +96,11 @@ function ForgotPassword() {
 
         <p
           onClick={() => navigate("/")}
-          className="text-sm text-center cursor-pointer"
+          className={`text-sm text-center cursor-pointer transition-all duration-300 ${
+            darkMode
+              ? "text-gray-400 hover:text-white"
+              : "text-gray-600 hover:text-black"
+          }`}
         >
           Back to Login
         </p>
