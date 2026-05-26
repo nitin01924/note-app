@@ -65,7 +65,7 @@ npm install
 * MONGO_URI=your_mongodb_connection_string
 * JWT_SECRET=your_secret_key
 * BREVO_API_KEY=your_brevo_api_key
-* BREVO_SENDER_EMAIL=notesapp.system@gmail.com
+* BREVO_SENDER_EMAIL=your@email@brevo
 * CLIENT_URL=http://localhost:5173
 
 ## Run backend:
