@@ -19,25 +19,35 @@ A full-stack Notes Web Application built using the MERN stack with secure authen
 
 ---
 
-## 🛠️ Tech Stack
+# 💻 Tech Stack
 
-**Frontend**
-* React (Vite)
-* Tailwind CSS
+### 🚀 Frontend
+<p align="left">
+  <img src="https://skillicons.dev/icons?i=react,tailwind,javascript" />
+</p>
 
-**Backend**
-* Node.js
-* Express.js
+---
 
-**Database**
-* MongoDB (Mongoose)
+### ⚙️ Backend
+<p align="left">
+  <img src="https://skillicons.dev/icons?i=nodejs,express,mongodb" />
+</p>
 
-**Other**
-* JWT (Authentication)
-* Nodemailer (Emails)
-* Joi (Validation)
-* Express Rate Limit
+---
 
+### 🔐 Authentication & Security
+
+![JWT](https://img.shields.io/badge/JWT-Authentication-black?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
+
+![Joi](https://img.shields.io/badge/Joi-Validation-blue?style=for-the-badge)
+
+![Express Rate Limit](https://img.shields.io/badge/Express-Rate_Limit-green?style=for-the-badge)
+
+---
+
+### 📧 Email Service
+
+![Nodemailer](https://img.shields.io/badge/Nodemailer-Emails-0A66C2?style=for-the-badge&logo=gmail&logoColor=white)
 ---
 
 ## 🌐 Live Demo
