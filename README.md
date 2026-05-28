@@ -131,3 +131,9 @@ npm run dev
 🧧 Nitin : nitin981275@gmail.com
 
 🔖 GitHub: https://github.com/nitin01924
+---
+<div align="center">
+
+### ❤️ Built by Nitin Kumar
+
+</div>
