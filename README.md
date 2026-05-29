@@ -1,139 +1,77 @@
-# 📝 Notes Web App (MERN)
+# Hey, I'm Nitin 👋
 
-A full-stack Notes Web Application built using the MERN stack with secure authentication, email verification, and password reset functionality.
+💻 BCA Student & MERN Stack Learner  
+🚀 Currently building a Full Stack Notes Web App  
+🌱 Learning Backend Development & Scalable Web Applications  
+⚡ Interested in Web Development, UI/UX & Modern Technologies
 
 ---
 
-## 🧧🧧 Features
+[![](https://komarev.com/ghpvc/?username=nitin01924&label=Profile+Views&color=0e75b6&style=flat)](https://github.com/nitin01924)
 
-* 🔐 JWT Authentication
-* 📧 Email Verification
-* 🔁 Resend Verification Email
-* 🔑 Forgot & Reset Password
-* 🛡️ Rate Limiting (Security)
-* 🧾 User-specific Notes
-* ✏️ Create, Read, Update, Delete (CRUD)
-* 🔒 Protected Routes
-* 🌙 Dark Mode UI
-* ⚡ Toast notifications for feedback
+---
+
+# 🌐 Connect With Me
+
+<p align="left">
+<a href="https://linkedin.com/in/nitin-kumar-a9609a2b2" target="blank">
+<img align="center" src="https://skillicons.dev/icons?i=linkedin" height="45" width="45" />
+</a>
+
+<a href="mailto:nitin981275@gmail.com">
+<img align="center" src="https://skillicons.dev/icons?i=gmail" height="45" width="45" />
+</a>
+
+<a href="https://wa.me/9817506079">
+<img align="center" src="https://img.icons8.com/color/48/whatsapp--v1.png" height="45" width="45" />
+</a>
+</p>
 
 ---
 
 # 💻 Tech Stack
 
 ### 🚀 Frontend
-<p align="left">
-  <img src="https://skillicons.dev/icons?i=react,tailwind,javascript" />
-</p>
 
----
+<p align="left">
+<img src="https://skillicons.dev/icons?i=html,css,javascript,react,tailwind,vite" />
+</p>
 
 ### ⚙️ Backend
+
 <p align="left">
-  <img src="https://skillicons.dev/icons?i=nodejs,express,mongodb" />
+<img src="https://skillicons.dev/icons?i=nodejs,express,mongodb" />
+</p>
+
+### 🛠️ Tools & Platforms
+
+<p align="left">
+<img src="https://skillicons.dev/icons?i=git,github,vscode,postman" />
 </p>
 
 ---
 
-### 🔐 Authentication & Security
+# 📊 GitHub Stats
 
-![JWT](https://img.shields.io/badge/JWT-Authentication-black?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
+![](https://github-readme-stats.vercel.app/api?username=nitin01924&show_icons=true&theme=tokyonight&hide_border=true&count_private=true)
 
-![Joi](https://img.shields.io/badge/Joi-Validation-blue?style=for-the-badge)
+![](https://streak-stats.demolab.com/?user=nitin01924&theme=tokyonight&hide_border=true)
 
-![Express Rate Limit](https://img.shields.io/badge/Express-Rate_Limit-green?style=for-the-badge)
-
----
-
-### 📧 Email Service
-
-![Nodemailer](https://img.shields.io/badge/Nodemailer-Emails-0A66C2?style=for-the-badge&logo=gmail&logoColor=white)
----
-
-## 🌐 Live Demo
-
-🧧 Frontend: https://note-app-omega-pied.vercel.app/  
-🧧 Backend: https://dashboard.render.com/project/prj-d7dneln41pts73a5dfqg
+![](https://github-readme-stats.vercel.app/api/top-langs/?username=nitin01924&theme=tokyonight&hide_border=true&layout=compact)
 
 ---
 
-## ⚙️ Setup Instructions
+## 📌 Current Focus
 
-### 1. Clone the repository
+- Building Real World MERN Projects
+- Learning Backend Architecture
+- Improving Frontend Skills
+- Exploring Modern Web Technologies
 
-```bash
-git clone https://github.com/nitin01924/note-app.git
-cd note-app 
-```
-### 2. Setup Backend
-```bash
-cd Backend
-npm install
-```
-## Create a .env file inside Backend:
-* PORT=3000
-* MONGO_URI=your_mongodb_connection_string
-* JWT_SECRET=your_secret_key
-* BREVO_API_KEY=your_brevo_api_key
-* BREVO_SENDER_EMAIL=your@email@brevo
-* CLIENT_URL=http://localhost:5173
-
-## Run backend:
-```bash
-npm run dev
-```
-## 3. Setup Frontend
-```bash
-cd Frontend
-npm install
-```
-## Create a .env file inside Frontend:
-* Main 
-```bash
-VITE_API_URL=https://note-app-backend-971i.onrender.com/api
-```
-* for Locat-host
-```bash
-VITE_API_URL=http://localhost:3000/api
-```
-## Run frontend:
-```bash
-npm run dev
-```
-
-## 📸 Screenshots
-
-### Login
-<p align="center">
-  <img src="./screenshots/login.png" alt="Login" width="300"/>
-</p>
-
-### Register
-<p align="center">
-  <img src="./screenshots/register.png" alt="Login" width="300"/>
-</p>
-
-### Notes Dashboard
-<p align="center">
-  <img src="./screenshots/notes.png" alt="Login" width="300"/>
-</p>
-
-## 📌 Notes
-* Password reset tokens are securely hashed
-* Rate limiting is applied on authentication routes
-* Centralized error handling implemented
-* Production-ready authentication flow
-* Make sure MongoDB is running or use MongoDB Atlas
-
-## 👨‍💻 Author
-
-### 
-🧧 Nitin : nitin981275@gmail.com
-
-🔖 GitHub: https://github.com/nitin01924
 ---
+
 <div align="center">
 
-### ❤️ Built by Nitin Kumar
+### ❤️ by Nitin Kumar
 
 </div>
