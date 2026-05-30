@@ -31,6 +31,7 @@ function Login({ onAuthSuccess }) {
 
       if (!email || !password) {
         alert("Please fill all fields");
+        toast.error("Please fill the fields first");
         return;
       }
 

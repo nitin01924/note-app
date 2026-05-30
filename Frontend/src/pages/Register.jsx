@@ -47,6 +47,7 @@ function Register({ onAuthSuccess }) {
       console.log(res);
     } catch (error) {
       console.error(error);
+      toast.error(error);
 
       // error when user already registered
       if (error.message.includes("User already exists")) {
