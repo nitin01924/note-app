@@ -2,7 +2,8 @@ import Note from "../models/Note.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
 
 //
-//CREATE-NOTE
+// !!==================== Create-note ====================!!
+
 export const createNote = asyncHandler(async (req, res) => {
   const { title, content, pinned } = req.body;
   const note = await Note.create({
@@ -18,7 +19,8 @@ export const createNote = asyncHandler(async (req, res) => {
 });
 
 //
-// GET NOTE
+// !!==================== Get-Note ====================!!
+
 export const getNote = asyncHandler(async (req, res) => {
   const notes = await Note.find({
     user: req.user._id,
@@ -30,7 +32,8 @@ export const getNote = asyncHandler(async (req, res) => {
 });
 
 //
-// DELETE NOTE
+// !!==================== Delete-Note ====================!!
+
 export const deleteNote = asyncHandler(async (req, res) => {
   const note = await Note.findById(req.params.id);
 
@@ -54,7 +57,8 @@ export const deleteNote = asyncHandler(async (req, res) => {
 });
 
 //
-//UPDATE NOTE
+// !!==================== Update-NOte ====================!!
+
 export const updateNote = asyncHandler(async (req, res) => {
   const note = await Note.findById(req.params.id);
 
