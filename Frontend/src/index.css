@@ -2,3 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    min-width: 320px;
+    background: #f7f8fb;
+    color: #111827;
+    font-family:
+      Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", sans-serif;
+  }
+
+  button,
+  input,
+  textarea {
+    font: inherit;
+  }
+
+  ::selection {
+    background: #bae6fd;
+    color: #0f172a;
+  }
+}
+
+@layer components {
+  .app-shell {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at top left, rgba(20, 184, 166, 0.18), transparent 28rem),
+      radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.12), transparent 30rem),
+      linear-gradient(135deg, #f8fafc 0%, #eef2f7 100%);
+  }
+
+  .dark .app-shell,
+  .dark.app-shell {
+    background:
+      radial-gradient(circle at top left, rgba(20, 184, 166, 0.14), transparent 28rem),
+      radial-gradient(circle at bottom right, rgba(96, 165, 250, 0.1), transparent 30rem),
+      linear-gradient(135deg, #09090b 0%, #111827 100%);
+  }
+
+  .glass-panel {
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+    backdrop-filter: blur(18px);
+  }
+
+  .dark .glass-panel {
+    border-color: rgba(71, 85, 105, 0.52);
+    background: rgba(15, 23, 42, 0.76);
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.28);
+  }
+
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-cyan-300 dark:focus-visible:ring-offset-slate-950;
+  }
+}

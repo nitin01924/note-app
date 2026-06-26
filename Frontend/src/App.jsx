@@ -14,7 +14,6 @@ import ResetPassword from "./pages/ResetPassword.jsx";
 //
 //  FUNCTION - APP
 function App() {
-  const [user, setUser] = useState(null);
   const [token, setToken] = useState(() => localStorage.getItem("token"));
   const [loading, setLoading] = useState(true);
   const [darkMode, setDarkMode] = useState(() => {
@@ -27,7 +26,6 @@ function App() {
 
   useEffect(() => {
     if (!token) {
-      setUser(null);
       setLoading(false);
       return;
     }
@@ -42,12 +40,10 @@ function App() {
 
         if (!res.ok) throw new Error("Unauthorized");
 
-        const data = await res.json();
-        setUser(data.user);
-      } catch (error) {
+        await res.json();
+      } catch {
         localStorage.removeItem("token");
         setToken(null);
-        setUser(null);
       } finally {
         setLoading(false);
       }
@@ -65,10 +61,20 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setToken(null);
-    setUser(null);
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) {
+    return (
+      <div className="app-shell flex min-h-screen items-center justify-center px-4">
+        <div className="glass-panel rounded-lg p-6 text-center">
+          <span className="mx-auto mb-4 block h-10 w-10 animate-spin rounded-full border-4 border-cyan-600 border-t-transparent" />
+          <p className="font-semibold text-slate-700 dark:text-slate-200">
+            Loading your workspace...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={darkMode ? "dark min-h-screen" : "min-h-screen"}>
