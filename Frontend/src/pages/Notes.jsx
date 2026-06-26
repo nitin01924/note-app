@@ -15,15 +15,6 @@ import "../index.css";
 import { getNotes, createNotes, deleteNote, updateNote } from "../services/api";
 import Button from "../components/Button";
 
-const cardShapes = [
-  "row-span-1",
-  "row-span-1 sm:col-span-2",
-  "row-span-2",
-  "row-span-1",
-  "row-span-2 sm:col-span-2",
-  "row-span-1",
-];
-
 function Notes() {
   const [notes, setNotes] = useState([]);
   const [title, setTitle] = useState("");
@@ -67,6 +58,15 @@ function Notes() {
     () => notes.find((note) => note._id === selectedNoteId),
     [notes, selectedNoteId],
   );
+
+  const getPreviewSize = (note) => {
+    const length = `${note.title} ${note.content}`.length;
+
+    if (length < 70) return "max-h-20";
+    if (length < 180) return "max-h-32";
+    if (length < 360) return "max-h-48";
+    return "max-h-64";
+  };
 
   const closeNote = () => {
     setSelectedNoteId(null);
@@ -148,8 +148,8 @@ function Notes() {
   };
 
   return (
-    <main className="app-shell px-4 pb-12 pt-8 text-slate-950 dark:text-white sm:px-6 lg:px-8">
-      <section className="mx-auto flex w-full max-w-7xl flex-col gap-6">
+    <main className="app-shell px-3 pb-10 pt-6 text-slate-950 dark:text-white sm:px-6 sm:pt-8 lg:px-8">
+      <section className="mx-auto flex w-full max-w-7xl flex-col gap-4 sm:gap-6">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-sm font-semibold text-cyan-800 dark:border-cyan-500/30 dark:bg-cyan-500/10 dark:text-cyan-200">
@@ -165,18 +165,22 @@ function Notes() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 sm:min-w-64">
-            <div className="glass-panel rounded-lg p-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-zinc-500">
+          <div className="grid grid-cols-2 gap-2 sm:min-w-56 sm:gap-3">
+            <div className="glass-panel rounded-lg px-3 py-2.5 sm:p-3">
+              <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-zinc-500 sm:text-xs">
                 Total
               </p>
-              <p className="mt-1 text-2xl font-bold">{notes.length}</p>
+              <p className="text-lg font-bold leading-tight sm:text-xl">
+                {notes.length}
+              </p>
             </div>
-            <div className="glass-panel rounded-lg p-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-zinc-500">
+            <div className="glass-panel rounded-lg px-3 py-2.5 sm:p-3">
+              <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-zinc-500 sm:text-xs">
                 Showing
               </p>
-              <p className="mt-1 text-2xl font-bold">{filteredNotes.length}</p>
+              <p className="text-lg font-bold leading-tight sm:text-xl">
+                {filteredNotes.length}
+              </p>
             </div>
           </div>
         </div>
@@ -186,15 +190,17 @@ function Notes() {
             type="button"
             onClick={() => setIsComposerOpen((isOpen) => !isOpen)}
             aria-expanded={isComposerOpen}
-            className="focus-ring flex w-full items-center justify-between gap-3 px-4 py-4 text-left transition hover:bg-white/70 dark:hover:bg-white/[0.04] sm:px-5"
+            className="focus-ring flex w-full items-center justify-between gap-3 px-3 py-3 text-left transition hover:bg-white/70 dark:hover:bg-white/[0.04] sm:px-5 sm:py-4"
           >
-            <span className="flex min-w-0 items-center gap-3">
-              <span className="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-cyan-600 text-white shadow-sm shadow-cyan-600/20 dark:bg-cyan-500 dark:text-black">
-                <Plus size={20} />
+            <span className="flex min-w-0 items-center gap-2.5 sm:gap-3">
+              <span className="flex h-8 w-8 flex-none items-center justify-center rounded-lg bg-cyan-600 text-white shadow-sm shadow-cyan-600/20 dark:bg-cyan-500 dark:text-black sm:h-10 sm:w-10">
+                <Plus size={18} />
               </span>
               <span className="min-w-0">
-                <span className="block font-bold">Add new note</span>
-                <span className="block truncate text-sm text-slate-500 dark:text-zinc-500">
+                <span className="block text-sm font-bold sm:text-base">
+                  Add new note
+                </span>
+                <span className="block truncate text-xs text-slate-500 dark:text-zinc-500 sm:text-sm">
                   Open the composer when you are ready to write.
                 </span>
               </span>
@@ -218,9 +224,9 @@ function Notes() {
               onSubmit={handleSubmit}
               className="min-h-0 overflow-hidden border-t border-slate-200/70 dark:border-white/10"
             >
-              <div className="grid gap-4 p-4 sm:p-5 lg:grid-cols-[minmax(180px,320px)_1fr_auto] lg:items-end">
+              <div className="grid gap-3 p-3 sm:gap-4 sm:p-5 lg:grid-cols-[minmax(180px,320px)_1fr_auto] lg:items-end">
                 <label className="block">
-                  <span className="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-zinc-200">
+                  <span className="mb-1 block text-xs font-semibold text-slate-700 dark:text-zinc-200 sm:text-sm">
                     Title
                   </span>
                   <input
@@ -228,20 +234,20 @@ function Notes() {
                     placeholder="Project idea"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 dark:border-white/10 dark:bg-black dark:text-white dark:placeholder:text-zinc-600"
+                    className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 dark:border-white/10 dark:bg-black dark:text-white dark:placeholder:text-zinc-600 sm:py-2.5"
                   />
                 </label>
 
                 <label className="block">
-                  <span className="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-zinc-200">
+                  <span className="mb-1 block text-xs font-semibold text-slate-700 dark:text-zinc-200 sm:text-sm">
                     Content
                   </span>
                   <textarea
                     placeholder="Write your note..."
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
-                    rows={3}
-                    className="w-full resize-none rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 dark:border-white/10 dark:bg-black dark:text-white dark:placeholder:text-zinc-600"
+                    rows={2}
+                    className="w-full resize-none rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 dark:border-white/10 dark:bg-black dark:text-white dark:placeholder:text-zinc-600 sm:py-2.5"
                   />
                 </label>
 
@@ -249,7 +255,7 @@ function Notes() {
                   type="submit"
                   loading={loading}
                   icon={Plus}
-                  className="w-full lg:w-auto"
+                  className="w-full py-2 lg:w-auto"
                 >
                   Add Note
                 </Button>
@@ -259,10 +265,10 @@ function Notes() {
         </section>
 
         <section className="min-w-0">
-          <div className="glass-panel mb-5 rounded-lg p-3">
+          <div className="glass-panel mb-4 rounded-lg p-2 sm:mb-5 sm:p-3">
             <div className="relative">
               <Search
-                size={18}
+                size={16}
                 aria-hidden="true"
                 className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-zinc-600"
               />
@@ -270,17 +276,17 @@ function Notes() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search notes..."
-                className="w-full rounded-lg border border-transparent bg-white/80 py-3 pl-10 pr-4 text-sm outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/10 dark:bg-black dark:text-white dark:placeholder:text-zinc-600 dark:focus:bg-black"
+                className="w-full rounded-lg border border-transparent bg-white/80 py-2.5 pl-9 pr-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/10 dark:bg-black dark:text-white dark:placeholder:text-zinc-600 dark:focus:bg-black sm:py-3 sm:pl-10 sm:pr-4"
               />
             </div>
           </div>
 
           {fetching ? (
-            <div className="grid auto-rows-[11rem] grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="columns-2 gap-3 sm:columns-3 sm:gap-4 xl:columns-4">
               {[1, 2, 3, 4, 5, 6].map((item) => (
                 <div
                   key={item}
-                  className="glass-panel animate-pulse rounded-lg p-5"
+                  className="glass-panel mb-3 inline-block h-28 w-full break-inside-avoid animate-pulse rounded-lg p-3 align-top sm:mb-4 sm:h-36 sm:p-5"
                 >
                   <div className="h-4 w-2/3 rounded bg-slate-200 dark:bg-zinc-800" />
                   <div className="mt-5 space-y-3">
@@ -316,27 +322,27 @@ function Notes() {
               )}
             </div>
           ) : (
-            <div className="grid auto-rows-[11rem] grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              {filteredNotes.map((note, index) => {
+            <div className="columns-2 gap-3 sm:columns-3 sm:gap-4 xl:columns-4">
+              {filteredNotes.map((note) => {
                 const longNote = note.content.length > 220;
-                const shape = cardShapes[index % cardShapes.length];
+                const previewSize = getPreviewSize(note);
 
                 return (
                   <button
                     key={note._id}
                     type="button"
                     onClick={() => setSelectedNoteId(note._id)}
-                    className={`glass-panel group flex min-h-44 cursor-pointer flex-col overflow-hidden rounded-lg p-5 text-left transition duration-300 hover:-translate-y-1 hover:border-cyan-300/70 hover:shadow-xl dark:hover:border-cyan-500/50 ${shape}`}
+                    className="glass-panel group mb-3 inline-block w-full break-inside-avoid cursor-pointer overflow-hidden rounded-lg p-3 text-left align-top transition duration-300 hover:-translate-y-1 hover:border-cyan-300/70 hover:shadow-xl dark:hover:border-cyan-500/50 sm:mb-4 sm:p-5"
                   >
-                    <div className="mb-4 flex items-start justify-between gap-3">
-                      <h3 className="line-clamp-2 text-lg font-bold text-slate-950 dark:text-white">
+                    <div className="mb-2.5 flex items-start justify-between gap-2 sm:mb-4 sm:gap-3">
+                      <h3 className="line-clamp-2 text-sm font-bold leading-snug text-slate-950 dark:text-white sm:text-lg">
                         {note.title}
                       </h3>
-                      <span className="mt-1 h-2.5 w-2.5 flex-none rounded-full bg-cyan-500 opacity-70 shadow-sm shadow-cyan-500/60 transition group-hover:scale-125 group-hover:opacity-100" />
+                      <span className="mt-1 h-2 w-2 flex-none rounded-full bg-cyan-500 opacity-70 shadow-sm shadow-cyan-500/60 transition group-hover:scale-125 group-hover:opacity-100 sm:h-2.5 sm:w-2.5" />
                     </div>
 
-                    <div className="relative min-h-0 flex-1 overflow-hidden">
-                      <p className="whitespace-pre-wrap text-sm leading-6 text-slate-600 dark:text-zinc-300">
+                    <div className={`relative overflow-hidden ${previewSize}`}>
+                      <p className="whitespace-pre-wrap text-xs leading-5 text-slate-600 dark:text-zinc-300 sm:text-sm sm:leading-6">
                         {note.content}
                       </p>
                       {longNote && (
@@ -344,12 +350,11 @@ function Notes() {
                       )}
                     </div>
 
-                    <div className="mt-4 flex items-center justify-between gap-3 text-xs font-semibold">
+                    <div className="mt-3 flex items-center justify-between gap-2 text-[11px] font-semibold sm:mt-4 sm:text-xs">
                       <span className="text-slate-400 dark:text-zinc-600">
-                        Click to focus
+                        Open
                       </span>
                       <span className="inline-flex items-center gap-1 text-cyan-700 opacity-0 transition group-hover:opacity-100 dark:text-cyan-300">
-                        Open
                         <ChevronDown size={14} className="-rotate-90" />
                       </span>
                     </div>
