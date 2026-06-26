@@ -6,7 +6,7 @@ function Navbar({ darkMode, setDarkMode, onLogout }) {
   const navigate = useNavigate();
 
   return (
-    <header className="sticky top-0 z-20 border-b border-slate-200/70 bg-white/82 px-4 py-3 text-slate-950 shadow-sm backdrop-blur-xl dark:border-slate-800/80 dark:bg-slate-950/82 dark:text-white sm:px-6">
+    <header className="sticky top-0 z-20 border-b border-slate-200/70 bg-white/95 px-4 py-3 text-slate-950 shadow-sm backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950 dark:text-white sm:px-6">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4">
         <button
           type="button"
