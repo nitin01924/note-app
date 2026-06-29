@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import {
   Check,
@@ -14,6 +14,51 @@ import {
 import "../index.css";
 import { getNotes, createNotes, deleteNote, updateNote } from "../services/api";
 import Button from "../components/Button";
+
+const getPreviewSize = (note) => {
+  const length = `${note.title} ${note.content}`.length;
+
+  if (length < 70) return "max-h-20";
+  if (length < 180) return "max-h-32";
+  if (length < 360) return "max-h-48";
+  return "max-h-64";
+};
+
+const NoteCard = memo(function NoteCard({ note, onSelect }) {
+  const longNote = note.content.length > 220;
+  const previewSize = getPreviewSize(note);
+
+  return (
+    <button
+      type="button"
+      onClick={() => onSelect(note._id)}
+      className="note-card glass-panel group mb-3 inline-block w-full break-inside-avoid cursor-pointer overflow-hidden rounded-lg p-3 text-left align-top transition duration-300 hover:-translate-y-1 hover:border-cyan-300/70 hover:shadow-xl dark:hover:border-cyan-500/50 sm:mb-4 sm:p-5"
+    >
+      <div className="mb-2.5 flex items-start justify-between gap-2 sm:mb-4 sm:gap-3">
+        <h3 className="line-clamp-2 text-sm font-bold leading-snug text-slate-950 dark:text-white sm:text-lg">
+          {note.title}
+        </h3>
+        <span className="mt-1 h-2 w-2 flex-none rounded-full bg-cyan-500 opacity-70 shadow-sm shadow-cyan-500/60 transition group-hover:scale-125 group-hover:opacity-100 sm:h-2.5 sm:w-2.5" />
+      </div>
+
+      <div className={`relative overflow-hidden ${previewSize}`}>
+        <p className="whitespace-pre-wrap text-xs leading-5 text-slate-600 dark:text-zinc-300 sm:text-sm sm:leading-6">
+          {note.content}
+        </p>
+        {longNote && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/95 to-transparent dark:from-black/95" />
+        )}
+      </div>
+
+      <div className="mt-3 flex items-center justify-between gap-2 text-[11px] font-semibold sm:mt-4 sm:text-xs">
+        <span className="text-slate-400 dark:text-zinc-600">Open</span>
+        <span className="inline-flex items-center gap-1 text-cyan-700 opacity-0 transition group-hover:opacity-100 dark:text-cyan-300">
+          <ChevronDown size={14} className="-rotate-90" />
+        </span>
+      </div>
+    </button>
+  );
+});
 
 function Notes() {
   const [notes, setNotes] = useState([]);
@@ -59,19 +104,14 @@ function Notes() {
     [notes, selectedNoteId],
   );
 
-  const getPreviewSize = (note) => {
-    const length = `${note.title} ${note.content}`.length;
-
-    if (length < 70) return "max-h-20";
-    if (length < 180) return "max-h-32";
-    if (length < 360) return "max-h-48";
-    return "max-h-64";
-  };
-
-  const closeNote = () => {
+  const closeNote = useCallback(() => {
     setSelectedNoteId(null);
     setEditId(null);
-  };
+  }, []);
+
+  const handleSelectNote = useCallback((id) => {
+    setSelectedNoteId(id);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -328,44 +368,13 @@ function Notes() {
             </div>
           ) : (
             <div className="columns-2 gap-3 sm:columns-3 sm:gap-4 xl:columns-4">
-              {filteredNotes.map((note) => {
-                const longNote = note.content.length > 220;
-                const previewSize = getPreviewSize(note);
-
-                return (
-                  <button
-                    key={note._id}
-                    type="button"
-                    onClick={() => setSelectedNoteId(note._id)}
-                    className="glass-panel group mb-3 inline-block w-full break-inside-avoid cursor-pointer overflow-hidden rounded-lg p-3 text-left align-top transition duration-300 hover:-translate-y-1 hover:border-cyan-300/70 hover:shadow-xl dark:hover:border-cyan-500/50 sm:mb-4 sm:p-5"
-                  >
-                    <div className="mb-2.5 flex items-start justify-between gap-2 sm:mb-4 sm:gap-3">
-                      <h3 className="line-clamp-2 text-sm font-bold leading-snug text-slate-950 dark:text-white sm:text-lg">
-                        {note.title}
-                      </h3>
-                      <span className="mt-1 h-2 w-2 flex-none rounded-full bg-cyan-500 opacity-70 shadow-sm shadow-cyan-500/60 transition group-hover:scale-125 group-hover:opacity-100 sm:h-2.5 sm:w-2.5" />
-                    </div>
-
-                    <div className={`relative overflow-hidden ${previewSize}`}>
-                      <p className="whitespace-pre-wrap text-xs leading-5 text-slate-600 dark:text-zinc-300 sm:text-sm sm:leading-6">
-                        {note.content}
-                      </p>
-                      {longNote && (
-                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/95 to-transparent dark:from-black/95" />
-                      )}
-                    </div>
-
-                    <div className="mt-3 flex items-center justify-between gap-2 text-[11px] font-semibold sm:mt-4 sm:text-xs">
-                      <span className="text-slate-400 dark:text-zinc-600">
-                        Open
-                      </span>
-                      <span className="inline-flex items-center gap-1 text-cyan-700 opacity-0 transition group-hover:opacity-100 dark:text-cyan-300">
-                        <ChevronDown size={14} className="-rotate-90" />
-                      </span>
-                    </div>
-                  </button>
-                );
-              })}
+              {filteredNotes.map((note) => (
+                <NoteCard
+                  key={note._id}
+                  note={note}
+                  onSelect={handleSelectNote}
+                />
+              ))}
             </div>
           )}
         </section>
@@ -373,7 +382,7 @@ function Notes() {
 
       {selectedNote && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 p-3 backdrop-blur-md sm:p-6"
+          className="note-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/55 p-3 backdrop-blur-md sm:p-6"
           onClick={closeNote}
         >
           <article
