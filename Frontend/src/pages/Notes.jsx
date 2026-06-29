@@ -159,10 +159,15 @@ function Notes() {
             <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
               My Notes
             </h1>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 dark:text-zinc-300">
-              Click any note to focus it in a glass view with the rest of your
-              board softly blurred behind it.
-            </p>
+            <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+              <p className="max-w-2xl text-sm leading-6 text-slate-600 dark:text-zinc-300">
+                Click any note to focus it in a glass view with the rest of your
+                board softly blurred behind it.
+              </p>
+              <span className="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-200">
+                Add sooner
+              </span>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-2 sm:min-w-56 sm:gap-3">
