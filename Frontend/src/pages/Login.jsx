@@ -55,26 +55,29 @@ function Login({ onAuthSuccess }) {
   };
 
   return (
-    <main className="app-shell flex min-h-screen items-center justify-center px-4 py-10 text-slate-950 dark:text-white">
-      <section className="grid w-full max-w-5xl overflow-hidden rounded-lg border border-slate-200 bg-white/78 shadow-2xl shadow-slate-200/60 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/76 dark:shadow-black/30 lg:grid-cols-[1fr_0.9fr]">
-        <div className="flex flex-col justify-between gap-10 bg-slate-950 p-8 text-white sm:p-10">
+    <main className="app-shell flex min-h-screen items-center justify-center px-4 py-6 text-slate-950 dark:text-white sm:py-10">
+      <section className="grid w-full max-w-md overflow-hidden rounded-lg border border-slate-200 bg-white/78 shadow-2xl shadow-slate-200/60 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/76 dark:shadow-black/30 lg:max-w-5xl lg:grid-cols-[1fr_0.9fr]">
+        <div className="flex flex-col justify-between gap-0 bg-slate-950 p-5 text-white sm:gap-10 sm:p-10">
           <div>
-            <div className="mb-8 flex items-center gap-3">
+            <div className="flex items-center gap-3 sm:mb-8">
               <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-cyan-500 text-slate-950">
                 <NotebookPen size={23} />
               </span>
               <span className="text-lg font-bold">Notes</span>
             </div>
-            <h1 className="max-w-md text-3xl font-bold tracking-tight sm:text-4xl">
+            <h1 className="mt-4 text-xl font-bold sm:hidden">
+              Welcome back.
+            </h1>
+            <h1 className="hidden max-w-md text-3xl font-bold tracking-tight sm:block sm:text-4xl">
               Welcome back to your personal note space.
             </h1>
-            <p className="mt-4 max-w-md text-sm leading-6 text-slate-300">
+            <p className="mt-4 hidden max-w-md text-sm leading-6 text-slate-300 sm:block">
               Pick up where you left off, search faster, and keep your daily
               thoughts organized.
             </p>
           </div>
 
-          <div className="grid gap-3 text-sm text-slate-300 sm:grid-cols-2">
+          <div className="hidden gap-3 text-sm text-slate-300 sm:grid sm:grid-cols-2">
             <div className="rounded-lg border border-white/10 bg-white/5 p-4">
               <ShieldCheck className="mb-3 text-cyan-300" size={20} />
               Secure login

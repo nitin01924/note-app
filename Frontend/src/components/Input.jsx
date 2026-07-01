@@ -48,7 +48,7 @@ const Input = ({
           <button
             type="button"
             aria-label={showPassword ? "Hide password" : "Show password"}
-            className="focus-ring absolute right-2 top-1/2 rounded-md p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
+            className="focus-ring absolute right-2 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-md p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
