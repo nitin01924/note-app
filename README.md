@@ -7,6 +7,7 @@ A full-stack Notes Web Application built using the MERN stack with secure authen
 ## 🧧🧧 Features
 
 * 🔐 JWT Authentication
+* Google OAuth login (Google Identity Services)
 * 📧 Email Verification
 * 🔁 Resend Verification Email
 * 🔑 Forgot & Reset Password
@@ -77,6 +78,7 @@ npm install
 * BREVO_API_KEY=your_brevo_api_key
 * BREVO_SENDER_EMAIL=your@email@brevo
 * CLIENT_URL=http://localhost:5173
+* GOOGLE_CLIENT_ID=your_google_oauth_web_client_id
 
 ## Run backend:
 ```bash
@@ -95,6 +97,7 @@ VITE_API_URL=https://note-app-backend-971i.onrender.com/api
 * for Locat-host
 ```bash
 VITE_API_URL=http://localhost:3000/api
+VITE_GOOGLE_CLIENT_ID=your_google_oauth_web_client_id
 ```
 ## Run frontend:
 ```bash
