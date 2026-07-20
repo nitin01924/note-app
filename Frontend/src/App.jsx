@@ -15,6 +15,7 @@ import ResetPassword from "./pages/ResetPassword.jsx";
 //  FUNCTION - APP
 function App() {
   const [token, setToken] = useState(() => localStorage.getItem("token"));
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem("theme") === "dark";
@@ -40,10 +41,12 @@ function App() {
 
         if (!res.ok) throw new Error("Unauthorized");
 
-        await res.json();
+        const data = await res.json();
+        setUser(data.user);
       } catch {
         localStorage.removeItem("token");
         setToken(null);
+        setUser(null);
       } finally {
         setLoading(false);
       }
@@ -61,6 +64,7 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setToken(null);
+    setUser(null);
   };
 
   if (loading) {
@@ -83,6 +87,7 @@ function App() {
           darkMode={darkMode}
           setDarkMode={setDarkMode}
           onLogout={handleLogout}
+          user={user}
         />
       )}
 

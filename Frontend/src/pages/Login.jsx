@@ -1,10 +1,15 @@
 import { useState } from "react";
-import { loginUser, resendVerification } from "../services/api";
+import {
+  loginUser,
+  loginWithGoogle,
+  resendVerification,
+} from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Mail, NotebookPen, ShieldCheck } from "lucide-react";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import { toast } from "react-toastify";
+import GoogleLoginButton from "../components/GoogleLoginButton";
 
 function Login({ onAuthSuccess }) {
   const navigate = useNavigate();
@@ -49,6 +54,21 @@ function Login({ onAuthSuccess }) {
       if (message.toLowerCase().includes("not found")) {
         navigate("/register");
       }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async (credential) => {
+    try {
+      setLoading(true);
+      const res = await loginWithGoogle(credential);
+
+      // Use the same token storage and redirect as email/password login.
+      onAuthSuccess(res.token);
+      navigate("/notes");
+    } catch (error) {
+      toast.error(error.message || "Unable to login with Google");
     } finally {
       setLoading(false);
     }
@@ -128,6 +148,17 @@ function Login({ onAuthSuccess }) {
               Login
             </Button>
           </form>
+
+          <div className="my-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-wider text-slate-400">
+            <span className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
+            or
+            <span className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
+          </div>
+
+          <GoogleLoginButton
+            onCredential={handleGoogleLogin}
+            disabled={loading}
+          />
 
           {showResend && (
             <Button

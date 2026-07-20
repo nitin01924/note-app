@@ -20,6 +20,16 @@ export const loginUser = async (data) => {
   return result.data;
 };
 
+// Exchange Google's short-lived ID credential for the app's existing JWT.
+export const loginWithGoogle = async (credential) => {
+  const result = await apiRequest("/auth/google", {
+    method: "POST",
+    body: JSON.stringify({ credential }),
+  });
+
+  return result.data;
+};
+
 // CREATE NOTES (PUSH)
 export const createNotes = async (data) => {
   const result = await apiRequest("/notes", {

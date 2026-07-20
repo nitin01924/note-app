@@ -1,9 +1,12 @@
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { LogOut, Moon, NotebookPen, Sun } from "lucide-react";
 
-function Navbar({ darkMode, setDarkMode, onLogout }) {
+function Navbar({ darkMode, setDarkMode, onLogout, user }) {
   const navigate = useNavigate();
+  const [avatarFailed, setAvatarFailed] = useState(false);
+  const initial = user?.name?.trim()?.charAt(0)?.toUpperCase() || "?";
 
   return (
     <header className="sticky top-0 z-20 border-b border-slate-200/70 bg-white/95 px-4 py-3 text-slate-950 shadow-sm backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950 dark:text-white sm:px-6">
@@ -27,6 +30,23 @@ function Navbar({ darkMode, setDarkMode, onLogout }) {
         </button>
 
         <div className="flex items-center gap-2">
+          <span
+            className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-cyan-600 font-bold text-white"
+            title={user?.name || "User"}
+          >
+            {user?.avatar && !avatarFailed ? (
+              <img
+                src={user.avatar}
+                alt={`${user.name}'s profile`}
+                className="h-full w-full object-cover"
+                referrerPolicy="no-referrer"
+                onError={() => setAvatarFailed(true)}
+              />
+            ) : (
+              initial
+            )}
+          </span>
+
           <Button
             variant="secondary"
             onClick={() => setDarkMode(!darkMode)}
