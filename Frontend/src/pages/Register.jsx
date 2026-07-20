@@ -132,12 +132,10 @@ function Register({ onAuthSuccess }) {
             <span className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
           </div>
 
-          <div className="rounded-lg bg-slate-950 p-3">
-            <GoogleLoginButton
-              onCredential={handleGoogleRegister}
-              disabled={loading}
-            />
-          </div>
+          <GoogleLoginButton
+            onCredential={handleGoogleRegister}
+            disabled={loading}
+          />
 
           <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
             Already have an account?{" "}
