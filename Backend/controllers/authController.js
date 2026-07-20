@@ -7,6 +7,15 @@ import {
   sendVerificationEmail,
 } from "../utils/sendEmail.js";
 import { loginSchema, registerSchema } from "../validators/authValidator.js";
+import { verifyGoogleIdToken } from "../services/googleAuthService.js";
+
+const authResponse = (user) => ({
+  name: user.name,
+  id: user._id,
+  email: user.email,
+  avatar: user.avatar,
+  token: generateToken(user._id),
+});
 
 //
 // !!==================== Register-User ====================!!
@@ -94,11 +103,67 @@ export const loginUser = asyncHandler(async (req, res) => {
     success: true,
     message: "User has been logged-in",
     data: {
-      name: user.name,
-      id: user._id,
-      email: user.email,
-      token: generateToken(user._id),
+      ...authResponse(user),
     },
+  });
+});
+
+//
+// !!==================== Google-Login ====================!!
+
+export const googleLogin = asyncHandler(async (req, res) => {
+  const { credential } = req.body;
+
+  if (!credential) {
+    res.status(400);
+    throw new Error("Google credential is required");
+  }
+
+  let googleProfile;
+  try {
+    googleProfile = await verifyGoogleIdToken(credential);
+  } catch (error) {
+    res.status(401);
+    throw new Error(
+      error.message === "Google OAuth is not configured"
+        ? error.message
+        : "Invalid or expired Google credential",
+    );
+  }
+
+  const { googleId, email, name, avatar } = googleProfile;
+  let user = await User.findOne({
+    $or: [{ googleId }, { email }],
+  });
+
+  if (!user) {
+    user = await User.create({
+      name,
+      email,
+      avatar,
+      provider: "google",
+      googleId,
+      // Google has already verified ownership of this email address.
+      isVerified: true,
+    });
+  } else {
+    // Link a verified Google identity to an existing account without deleting
+    // its password; email/password login therefore continues to work.
+    if (user.googleId && user.googleId !== googleId) {
+      res.status(409);
+      throw new Error("This email is linked to another Google account");
+    }
+
+    user.googleId = googleId;
+    user.avatar = avatar || user.avatar;
+    user.isVerified = true;
+    await user.save();
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "User has been logged-in with Google",
+    data: authResponse(user),
   });
 });
 

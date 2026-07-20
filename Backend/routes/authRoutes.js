@@ -6,6 +6,7 @@ import {
   resendVerificationEmail,
   resetPassword,
   forgotPassword,
+  googleLogin,
 } from "../controllers/authController.js";
 import { protect,authLimiter } from "../middlewares/authMiddleware.js";
 import express from "express";
@@ -14,6 +15,7 @@ const router = express.Router();
 
 router.post("/register", authLimiter, registerUser);
 router.post("/login", authLimiter, loginUser);
+router.post("/google", authLimiter, googleLogin);
 router.get("/me", protect, getMe);
 router.get("/verify-email", verifyEmail);
 router.post("/resend-verification", resendVerificationEmail);
