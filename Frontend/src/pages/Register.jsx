@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { registerUser } from "../services/api";
+import { loginWithGoogle, registerUser } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Mail, NotebookPen, UserRound } from "lucide-react";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import { toast } from "react-toastify";
+import GoogleLoginButton from "../components/GoogleLoginButton";
 
 function Register({ onAuthSuccess }) {
   const navigate = useNavigate();
@@ -50,6 +51,22 @@ function Register({ onAuthSuccess }) {
         toast.error("Try to login instead.");
         navigate("/");
       }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleRegister = async (credential) => {
+    try {
+      setLoading(true);
+
+      // The shared Google endpoint creates a first-time user and logs in an
+      // existing one, then returns the same JWT used by local authentication.
+      const res = await loginWithGoogle(credential);
+      onAuthSuccess(res.token);
+      navigate("/notes");
+    } catch (error) {
+      toast.error(error.message || "Unable to continue with Google");
     } finally {
       setLoading(false);
     }
@@ -108,6 +125,19 @@ function Register({ onAuthSuccess }) {
               Register
             </Button>
           </form>
+
+          <div className="my-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-wider text-slate-400">
+            <span className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
+            or
+            <span className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
+          </div>
+
+          <div className="rounded-lg bg-slate-950 p-3">
+            <GoogleLoginButton
+              onCredential={handleGoogleRegister}
+              disabled={loading}
+            />
+          </div>
 
           <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
             Already have an account?{" "}
