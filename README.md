@@ -14,9 +14,14 @@ A full-stack Notes Web Application built using the MERN stack with secure authen
 * 🛡️ Rate Limiting (Security)
 * 🧾 User-specific Notes
 * ✏️ Create, Read, Update, Delete (CRUD)
+* 🔍 Real-time Search & Filter
+* 📌 Note Pinning
+* 🎨 Note Customization (Color coding)
 * 🔒 Protected Routes
 * 🌙 Dark Mode UI
 * ⚡ Toast notifications for feedback
+* 📱 Fully Responsive Design
+* 💎 Glass-morphism UI Effects
 
 ---
 
@@ -94,7 +99,7 @@ npm install
 ```bash
 VITE_API_URL=https://note-app-backend-971i.onrender.com/api
 ```
-* for Locat-host
+* for Localhost
 ```bash
 VITE_API_URL=http://localhost:3000/api
 VITE_GOOGLE_CLIENT_ID=your_google_oauth_web_client_id
@@ -113,12 +118,12 @@ npm run dev
 
 ### Register
 <p align="center">
-  <img src="./screenshots/register.png" alt="Login" width="300"/>
+  <img src="./screenshots/register.png" alt="Register" width="300"/>
 </p>
 
 ### Notes Dashboard
 <p align="center">
-  <img src="./screenshots/notes.png" alt="Login" width="300"/>
+  <img src="./screenshots/notes.png" alt="Notes Dashboard" width="300"/>
 </p>
 
 ## 📌 Notes
@@ -126,7 +131,10 @@ npm run dev
 * Rate limiting is applied on authentication routes
 * Centralized error handling implemented
 * Production-ready authentication flow
+* Real-time search with instant filtering
+* Notes support pinning and color customization
 * Make sure MongoDB is running or use MongoDB Atlas
+* Responsive design optimized for all devices
 
 ## 👨‍💻 Author
 
