@@ -38,6 +38,6 @@ export const protect = asyncHandler(async (req, res, next) => {
   windowMs: 15 * 60 * 1000, //15 min
   max: 10, // max 10 requests from each IP in 15 min.
   message: {
-    message: "Too many requests, please try again later",
+    message: "Too many requests, please try again after 15 minutes",
   },
 });
